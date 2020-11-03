@@ -1,0 +1,248 @@
+@prefix : <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix AdvisoryBot: <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#> .
+@base <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl> .
+
+<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#isTaughtBy
+AdvisoryBot:isTaughtBy rdf:type owl:ObjectProperty ;
+                       owl:inverseOf AdvisoryBot:teaches .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#teaches
+AdvisoryBot:teaches rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#email
+AdvisoryBot:email rdf:type owl:DatatypeProperty .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#firstName
+AdvisoryBot:firstName rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#lastName
+AdvisoryBot:lastName rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#website
+AdvisoryBot:website rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Adjunct
+AdvisoryBot:Adjunct rdf:type owl:Class ;
+                    rdfs:subClassOf AdvisoryBot:Faculty ;
+                    owl:disjointWith AdvisoryBot:Permanent .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Faculty
+AdvisoryBot:Faculty rdf:type owl:Class ;
+                    owl:disjointWith AdvisoryBot:Staff .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Permanent
+AdvisoryBot:Permanent rdf:type owl:Class ;
+                      rdfs:subClassOf AdvisoryBot:Faculty .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Secretary
+AdvisoryBot:Secretary rdf:type owl:Class ;
+                      rdfs:subClassOf AdvisoryBot:Staff .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Staff
+AdvisoryBot:Staff rdf:type owl:Class .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Tutor
+AdvisoryBot:Tutor rdf:type owl:Class ;
+                  rdfs:subClassOf AdvisoryBot:Staff .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Bradley_Kjell
+AdvisoryBot:Bradley_Kjell rdf:type owl:NamedIndividual ,
+                                   AdvisoryBot:Permanent ;
+                          AdvisoryBot:email "Kjell@ccsu.edu" ;
+                          AdvisoryBot:firstName "Bradley" ;
+                          AdvisoryBot:lastName "Kjell" ;
+                          AdvisoryBot:website "https://cs.ccsu.edu/~kjell/" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Chad_Williams
+AdvisoryBot:Chad_Williams rdf:type owl:NamedIndividual ,
+                                   AdvisoryBot:Permanent ;
+                          AdvisoryBot:email "cwilliams@ccsu.edu" ;
+                          AdvisoryBot:firstName "Chad" ;
+                          AdvisoryBot:lastName "Williams" ;
+                          AdvisoryBot:website "https://sites.google.com/site/chadwilliamshome/" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Edward_Freeman
+AdvisoryBot:Edward_Freeman rdf:type owl:NamedIndividual ,
+                                    AdvisoryBot:Adjunct ;
+                           AdvisoryBot:email "FreemanE@ccsu.edu" ;
+                           AdvisoryBot:firstName "Edward" ;
+                           AdvisoryBot:lastName "Freeman" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Fatemeh_Abdollahzadeh
+AdvisoryBot:Fatemeh_Abdollahzadeh rdf:type owl:NamedIndividual ,
+                                           AdvisoryBot:Permanent ;
+                                  AdvisoryBot:email "Abdollah@ccsu.edu" ;
+                                  AdvisoryBot:firstName "Fatemeh" ;
+                                  AdvisoryBot:lastName "Abdollahzadeh" ;
+                                  AdvisoryBot:website "https://cs.ccsu.edu/~abdollah/" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Geneva_Deutsch
+AdvisoryBot:Geneva_Deutsch rdf:type owl:NamedIndividual ,
+                                    AdvisoryBot:Secretary .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Irena_Pevac
+AdvisoryBot:Irena_Pevac rdf:type owl:NamedIndividual ,
+                                 AdvisoryBot:Permanent ;
+                        AdvisoryBot:email "Pevac@ccsu.edu" ;
+                        AdvisoryBot:firstName "Irena" ;
+                        AdvisoryBot:lastName "Pevac" ;
+                        AdvisoryBot:website "https://cs.ccsu.edu/~pevac/" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Jeffrey_Blankenship
+AdvisoryBot:Jeffrey_Blankenship rdf:type owl:NamedIndividual ,
+                                         AdvisoryBot:Adjunct ;
+                                AdvisoryBot:email "jeffrey.blankenship@ccsu.edu" ;
+                                AdvisoryBot:firstName "Jeffrey" ;
+                                AdvisoryBot:lastName "Blankenship" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Mahdieh_Zabihimayvan
+AdvisoryBot:Mahdieh_Zabihimayvan rdf:type owl:NamedIndividual ,
+                                          AdvisoryBot:Permanent ;
+                                 AdvisoryBot:email "zabihimayvan@ccsu.edu" ;
+                                 AdvisoryBot:firstName "Mahdieh" ;
+                                 AdvisoryBot:lastName "Zabihimayvan" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Muthu_Sankaran
+AdvisoryBot:Muthu_Sankaran rdf:type owl:NamedIndividual ,
+                                    AdvisoryBot:Adjunct ;
+                           AdvisoryBot:email "SankaranM@ccsu.edu" ;
+                           AdvisoryBot:firstName "Muthu" ;
+                           AdvisoryBot:lastName "Sankaran" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Neli_Zlatareva
+AdvisoryBot:Neli_Zlatareva rdf:type owl:NamedIndividual ,
+                                    AdvisoryBot:Permanent ;
+                           AdvisoryBot:email "Zlatareva@ccsu.edu" ;
+                           AdvisoryBot:firstName "Neli" ;
+                           AdvisoryBot:lastName "Zlatareva" ;
+                           AdvisoryBot:website "https://cs.ccsu.edu/~neli/" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Paul_Uccello
+AdvisoryBot:Paul_Uccello rdf:type owl:NamedIndividual ,
+                                  AdvisoryBot:Adjunct ;
+                         AdvisoryBot:email "UCCELLOP@ccsu.edu" ;
+                         AdvisoryBot:firstName "Paul" ;
+                         AdvisoryBot:lastName "Uccello" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Roland_Depratti
+AdvisoryBot:Roland_Depratti rdf:type owl:NamedIndividual ,
+                                     AdvisoryBot:Adjunct ;
+                            AdvisoryBot:email "roland.depratti@ccsu.edu" ;
+                            AdvisoryBot:firstName "Roland" ;
+                            AdvisoryBot:lastName "Depratti" ;
+                            AdvisoryBot:website "http://www.rolanddepratti.com/" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Sixia_Chen
+AdvisoryBot:Sixia_Chen rdf:type owl:NamedIndividual ,
+                                AdvisoryBot:Permanent ;
+                       AdvisoryBot:email "schen@ccsu.edu" ;
+                       AdvisoryBot:firstName "Sixia" ;
+                       AdvisoryBot:lastName "Chen" ;
+                       AdvisoryBot:website "https://cs.ccsu.edu/~chen/" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Stan_Kurkovsky
+AdvisoryBot:Stan_Kurkovsky rdf:type owl:NamedIndividual ,
+                                    AdvisoryBot:Permanent ;
+                           AdvisoryBot:email "kurkovsky@ccsu.edu" ;
+                           AdvisoryBot:firstName "Stan" ;
+                           AdvisoryBot:lastName "Kurovsky" ;
+                           AdvisoryBot:website "https://cs.ccsu.edu/~stan/" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Steven_Ambrosini
+AdvisoryBot:Steven_Ambrosini rdf:type owl:NamedIndividual ,
+                                      AdvisoryBot:Adjunct ;
+                             AdvisoryBot:email "ambrosinis@ccsu.edu" ;
+                             AdvisoryBot:firstName "Steven" ;
+                             AdvisoryBot:lastName "Ambrosini" ;
+                             AdvisoryBot:website "http://sga.professorsplace.info/" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Steven_Mead
+AdvisoryBot:Steven_Mead rdf:type owl:NamedIndividual ,
+                                 AdvisoryBot:Adjunct ;
+                        AdvisoryBot:email "MeadS@ccsu.edu" ;
+                        AdvisoryBot:firstName "Steven" ;
+                        AdvisoryBot:lastName "Mead" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Tom_King
+AdvisoryBot:Tom_King rdf:type owl:NamedIndividual ,
+                              AdvisoryBot:Adjunct ;
+                     AdvisoryBot:email "KingTL@ccsu.edu" ;
+                     AdvisoryBot:firstName "Tom" ;
+                     AdvisoryBot:lastName "King" .
+
+
+###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Yusuf_Albayram
+AdvisoryBot:Yusuf_Albayram rdf:type owl:NamedIndividual ,
+                                    AdvisoryBot:Permanent ;
+                           AdvisoryBot:email "deutschgem@ccsu.edu" ;
+                           AdvisoryBot:firstName "Yusuf" ;
+                           AdvisoryBot:lastName "Albayram" .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointProperties ;
+  owl:members ( AdvisoryBot:email
+                AdvisoryBot:firstName
+                AdvisoryBot:lastName
+                AdvisoryBot:website
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
