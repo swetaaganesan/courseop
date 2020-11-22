@@ -28,4 +28,11 @@ public class CourseController {
 		//TODO service to get course timings
 		return "courseTimings";
 	}
+	
+	@RequestMapping(/* "value = "/login", /courseDetails" */)
+	public String getCourseDetails(Map<String, Object> model) throws IOException {
+		List response = coursesService.getCourseDetails();
+		model.put("courses", response);
+		return "courseDetails";
+	}
 }

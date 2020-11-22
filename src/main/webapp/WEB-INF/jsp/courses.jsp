@@ -47,13 +47,28 @@
     <tr>
       <th scope="col">CourseNumber</th>
       <th scope="col">CourseName</th>
+      <th scope="col">Pre-requisite</th>
+      <th scope="col">CourseType</th>
     </tr>
   </thead>
   <tbody>
   <c:forEach items="${courses}" var="course">
     <tr>
-      <td>${course.courseNumber}</td>
+      <td><a href="/courseop/courseDetails">${course.courseNumber}</a></td>
       <td>${course.courseName}</td>
+      <td>
+	      <c:forEach items="${course.prerequisite}" var="prerequisite">
+	      <c:if test="${course.prerequisite == 'null'}">
+   			<li>None</li>
+	  	</c:if>
+	  	<c:if test="${course.prerequisite != 'null'}">
+    		<li><a href="/courseop/courseDetails">${prerequisite}</a></li>
+	  	</c:if>
+	      	
+	      </c:forEach>
+      </td>
+	  
+      <td>${course.type}</td>
     </tr>
    </c:forEach>
   </tbody>

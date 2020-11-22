@@ -21,7 +21,7 @@ import openllet.jena.PelletReasonerFactory;
 public class AdvisorSchemaFactory{
 
 	//private static final Logger logger = LogManager.getLogger(TTLFileReader.class);
-	private static final String COURSE_TTL_FILE = "src/main/resources/static/StudentProg-2.0.ttl";
+	private static final String COURSE_TTL_FILE = "src/main/resources/static/StudentProg-3.1.ttl";
 	private static final String FACULTY_TTL_FILE = "src/main/resources/static/Faculty-me.ttl";
 
 	private OntModel courseSchema = ModelFactory.createOntologyModel();
