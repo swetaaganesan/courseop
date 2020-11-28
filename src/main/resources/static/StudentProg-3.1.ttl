@@ -1,1087 +1,1305 @@
-@prefix : <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix :      <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#> .
 @prefix AdvisoryBot: <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#> .
-@base <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl> .
-
-<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl> rdf:type owl:Ontology .
-
-#################################################################
-#    Object Properties
-#################################################################
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#daysOffered
-AdvisoryBot:daysOffered rdf:type owl:ObjectProperty ;
-                        rdfs:domain AdvisoryBot:Course ;
-                        rdfs:range AdvisoryBot:Day ;
-                        rdfs:comment "Day/dates of the week the course is currently offered." .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#hasElective
-AdvisoryBot:hasElective rdf:type owl:ObjectProperty ;
-                        owl:inverseOf AdvisoryBot:isElectiveFor ;
-                        rdfs:domain AdvisoryBot:AcademicProgram ;
-                        rdfs:range AdvisoryBot:Course .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#hasPrerequisite
-AdvisoryBot:hasPrerequisite rdf:type owl:ObjectProperty ;
-                            owl:inverseOf AdvisoryBot:isPrerequisiteFor ;
-                            rdf:type owl:TransitiveProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#hasRecommendedPrerequisite
-AdvisoryBot:hasRecommendedPrerequisite rdf:type owl:ObjectProperty ;
-                                       rdfs:subPropertyOf AdvisoryBot:hasPrerequisite ;
-                                       owl:inverseOf AdvisoryBot:isRecommendedPrerequisiteFor ;
-                                       rdf:type owl:TransitiveProperty ;
-                                       rdfs:comment "Recommended course or condition for a course to be taken." .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#hasRequiredCore
-AdvisoryBot:hasRequiredCore rdf:type owl:ObjectProperty ;
-                            owl:inverseOf AdvisoryBot:isRequiredCoreFor ;
-                            rdfs:domain AdvisoryBot:AcademicProgram ;
-                            rdfs:range AdvisoryBot:Course ;
-                            rdfs:comment "A program's required core classes." .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#hasRequiredCourse
-AdvisoryBot:hasRequiredCourse rdf:type owl:ObjectProperty ;
-                              owl:inverseOf AdvisoryBot:isRequiredCourseFor ,
-                                            AdvisoryBot:isRequiredFor .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#hasRequiredPrerequisite
-AdvisoryBot:hasRequiredPrerequisite rdf:type owl:ObjectProperty ;
-                                    rdfs:subPropertyOf AdvisoryBot:hasPrerequisite ;
-                                    owl:inverseOf AdvisoryBot:isRequiredPrerequisiteFor ;
-                                    rdf:type owl:TransitiveProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#isElectiveFor
-AdvisoryBot:isElectiveFor rdf:type owl:ObjectProperty ;
-                          rdfs:domain AdvisoryBot:Course ;
-                          rdfs:range AdvisoryBot:AcademicProgram ;
-                          rdfs:comment "Elective course for a program." .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#isOfferedBy
-AdvisoryBot:isOfferedBy rdf:type owl:ObjectProperty ;
-                        owl:inverseOf AdvisoryBot:offers ;
-                        rdfs:domain AdvisoryBot:Course ;
-                        rdfs:range AdvisoryBot:Department .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#isPrerequisiteFor
-AdvisoryBot:isPrerequisiteFor rdf:type owl:ObjectProperty ,
-                                       owl:TransitiveProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#isRecommendedPrerequisiteFor
-AdvisoryBot:isRecommendedPrerequisiteFor rdf:type owl:ObjectProperty ;
-                                         rdfs:subPropertyOf AdvisoryBot:isPrerequisiteFor ;
-                                         rdf:type owl:TransitiveProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#isRequiredCoreFor
-AdvisoryBot:isRequiredCoreFor rdf:type owl:ObjectProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#isRequiredCourseFor
-AdvisoryBot:isRequiredCourseFor rdf:type owl:ObjectProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#isRequiredFor
-AdvisoryBot:isRequiredFor rdf:type owl:ObjectProperty ;
-                          rdfs:domain AdvisoryBot:Course ;
-                          rdfs:range AdvisoryBot:AcademicProgram ;
-                          rdfs:comment "Core course required for a program." .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#isRequiredPrerequisiteFor
-AdvisoryBot:isRequiredPrerequisiteFor rdf:type owl:ObjectProperty ;
-                                      rdfs:subPropertyOf AdvisoryBot:isPrerequisiteFor ;
-                                      rdf:type owl:TransitiveProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#offers
-AdvisoryBot:offers rdf:type owl:ObjectProperty ;
-                   rdfs:domain AdvisoryBot:Department ;
-                   rdfs:range AdvisoryBot:Course .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#semesterOffered
-AdvisoryBot:semesterOffered rdf:type owl:ObjectProperty ;
-                            rdfs:domain AdvisoryBot:Course ;
-                            rdfs:range AdvisoryBot:Semester .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#timeOffered
-AdvisoryBot:timeOffered rdf:type owl:ObjectProperty ;
-                        rdfs:domain AdvisoryBot:Course ;
-                        rdfs:range AdvisoryBot:Time .
-
-
-#################################################################
-#    Data properties
-#################################################################
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#courseCRN
-AdvisoryBot:courseCRN rdf:type owl:DatatypeProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#courseDescription
-AdvisoryBot:courseDescription rdf:type owl:DatatypeProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#courseName
-AdvisoryBot:courseName rdf:type owl:DatatypeProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#courseNumber
-AdvisoryBot:courseNumber rdf:type owl:DatatypeProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#courseRequirement
-AdvisoryBot:courseRequirement rdf:type owl:DatatypeProperty ;
-                              rdfs:comment "Defines who is eligible to take the course." .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#creditsPerSemester
-AdvisoryBot:creditsPerSemester rdf:type owl:DatatypeProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#numberCredits
-AdvisoryBot:numberCredits rdf:type owl:DatatypeProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#programAdmissionRequirements
-AdvisoryBot:programAdmissionRequirements rdf:type owl:DatatypeProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#programDescription
-AdvisoryBot:programDescription rdf:type owl:DatatypeProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#programName
-AdvisoryBot:programName rdf:type owl:DatatypeProperty .
-
-
-#################################################################
-#    Classes
-#################################################################
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#AcademicProgram
-AdvisoryBot:AcademicProgram rdf:type owl:Class .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Condition
-AdvisoryBot:Condition rdf:type owl:Class .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Course
-AdvisoryBot:Course rdf:type owl:Class .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Day
-AdvisoryBot:Day rdf:type owl:Class .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Department
-AdvisoryBot:Department rdf:type owl:Class .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Graduate
-AdvisoryBot:Graduate rdf:type owl:Class ;
-                     owl:equivalentClass [ owl:intersectionOf ( AdvisoryBot:Course
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty AdvisoryBot:isElectiveFor ;
-                                                                  owl:someValuesFrom AdvisoryBot:GraduateProgram
-                                                                ]
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty AdvisoryBot:isRequiredFor ;
-                                                                  owl:someValuesFrom AdvisoryBot:GraduateProgram
-                                                                ]
-                                                              ) ;
-                                           rdf:type owl:Class
-                                         ] .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#GraduateProgram
-AdvisoryBot:GraduateProgram rdf:type owl:Class ;
-                            rdfs:subClassOf AdvisoryBot:AcademicProgram ;
-                            owl:disjointWith AdvisoryBot:UndergraduateProgram .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Person
-AdvisoryBot:Person rdf:type owl:Class .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Semester
-AdvisoryBot:Semester rdf:type owl:Class .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Student
-AdvisoryBot:Student rdf:type owl:Class ;
-                    rdfs:subClassOf AdvisoryBot:Person .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Time
-AdvisoryBot:Time rdf:type owl:Class .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Undergraduate
-AdvisoryBot:Undergraduate rdf:type owl:Class ;
-                          owl:equivalentClass [ owl:intersectionOf ( AdvisoryBot:Course
-                                                                     [ rdf:type owl:Class ;
-                                                                       owl:complementOf AdvisoryBot:Graduate
-                                                                     ]
-                                                                   ) ;
-                                                rdf:type owl:Class
-                                              ] ;
-                          rdfs:subClassOf AdvisoryBot:Course .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#UndergraduateProgram
-AdvisoryBot:UndergraduateProgram rdf:type owl:Class ;
-                                 rdfs:subClassOf AdvisoryBot:AcademicProgram .
-
-
-#################################################################
-#    Individuals
-#################################################################
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#AD_CIT
-AdvisoryBot:AD_CIT rdf:type owl:NamedIndividual ,
-                            AdvisoryBot:Condition .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#AD_SE
-AdvisoryBot:AD_SE rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Condition .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Afternoon
-AdvisoryBot:Afternoon rdf:type owl:NamedIndividual ,
-                               AdvisoryBot:Time .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CEGT
-AdvisoryBot:CEGT rdf:type owl:NamedIndividual ,
-                          AdvisoryBot:Department .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CET501
-AdvisoryBot:CET501 rdf:type owl:NamedIndividual ,
-                            AdvisoryBot:Graduate ;
-                   AdvisoryBot:isOfferedBy AdvisoryBot:CEGT ;
-                   AdvisoryBot:isRequiredFor AdvisoryBot:CIT_CS ;
-                   AdvisoryBot:semesterOffered AdvisoryBot:Fall ;
-                   AdvisoryBot:timeOffered AdvisoryBot:Online ;
-                   AdvisoryBot:courseName "Applied Networking Technology I" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CIT595
-AdvisoryBot:CIT595 rdf:type owl:NamedIndividual ,
-                            AdvisoryBot:Graduate ;
-                   AdvisoryBot:hasRequiredPrerequisite AdvisoryBot:CET501 ,
-                                                       AdvisoryBot:CS501 ,
-                                                       AdvisoryBot:CS502 ,
-                                                       AdvisoryBot:Min_18_Credits ,
-                                                       AdvisoryBot:Min_3.0_GPA ;
-                   AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                   AdvisoryBot:isRequiredFor AdvisoryBot:CIT_CS ;
-                   AdvisoryBot:semesterOffered AdvisoryBot:Fall ,
-                                               AdvisoryBot:Spring ;
-                   AdvisoryBot:courseName "Capsstone in CIT" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CIT_CS
-AdvisoryBot:CIT_CS rdf:type owl:NamedIndividual ,
-                            AdvisoryBot:GraduateProgram ;
-                   AdvisoryBot:hasRequiredCore AdvisoryBot:CET501 ,
-                                               AdvisoryBot:CS500 ,
-                                               AdvisoryBot:CS501 ,
-                                               AdvisoryBot:CS502 ;
-                   AdvisoryBot:hasRequiredCourse AdvisoryBot:CIT595 ;
-                   AdvisoryBot:numberCredits 33 ;
-                   AdvisoryBot:programAdmissionRequirements "GPA of 2.7/4.0 and GPA of 3.0 in post-baccalaureate couse work; no formal CS background required." .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CIT_SE
-AdvisoryBot:CIT_SE rdf:type owl:NamedIndividual ,
-                            AdvisoryBot:GraduateProgram ;
-                   AdvisoryBot:hasPrerequisite AdvisoryBot:CS500 ,
-                                               AdvisoryBot:CS502 ;
-                   AdvisoryBot:hasRequiredCore AdvisoryBot:CET501 ,
-                                               AdvisoryBot:CS501 ,
-                                               AdvisoryBot:CS505 ,
-                                               AdvisoryBot:CS510 ;
-                   AdvisoryBot:numberCredits 33 ;
-                   AdvisoryBot:programAdmissionRequirements "GPA of 3.0 in baccalaureate couse work; formal CS background required." .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS
-AdvisoryBot:CS rdf:type owl:NamedIndividual ,
-                        AdvisoryBot:Department .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS151
-AdvisoryBot:CS151 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ,
-                                          AdvisoryBot:Wednesday ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#10:50_12:05_pm> ;
-                  AdvisoryBot:courseCRN 40387 ;
-                  AdvisoryBot:courseName "Computer Science 1" ;
-                  AdvisoryBot:courseNumber "CS 151" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS152
-AdvisoryBot:CS152 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Thursday ,
-                                          AdvisoryBot:Tuesday ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#3:05_4:20_pm> ;
-                  AdvisoryBot:courseCRN 40390 ;
-                  AdvisoryBot:courseName "Computer Science II" ;
-                  AdvisoryBot:courseNumber "CS 152" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS253
-AdvisoryBot:CS253 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Thursday ,
-                                          AdvisoryBot:Tuesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS151 ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#12:15_1:30_pm> ;
-                  AdvisoryBot:courseCRN 10951 ;
-                  AdvisoryBot:courseName "Data and File Structure" ;
-                  AdvisoryBot:courseNumber "CS 253" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS254
-AdvisoryBot:CS254 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ,
-                                          AdvisoryBot:Wednesday ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:isRequiredCoreFor AdvisoryBot:ComputerScienceMinor ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ,
-                                              AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#12:15_1:30_pm> ;
-                  AdvisoryBot:courseCRN 10954 ;
-                  AdvisoryBot:courseName "Assembly Language" ;
-                  AdvisoryBot:courseNumber "CS 254" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS291
-AdvisoryBot:CS291 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ,
-                                          AdvisoryBot:Wednesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS151 ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered AdvisoryBot:Evening ;
-                  AdvisoryBot:courseCRN 40401 ;
-                  AdvisoryBot:courseName "Intro to Computer Forensics" ;
-                  AdvisoryBot:courseNumber "CS 291" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS354
-AdvisoryBot:CS354 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ,
-                                          AdvisoryBot:Wednesday ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#9:25_10:40_am> ;
-                  AdvisoryBot:courseCRN 40402 ;
-                  AdvisoryBot:courseName "Digital Systems Design" ;
-                  AdvisoryBot:courseNumber "CS 354" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS355
-AdvisoryBot:CS355 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Thursday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS254 ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered AdvisoryBot:Tuesday ,
-                                          <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#9:25_10:40_am> ;
-                  AdvisoryBot:courseCRN 40405 ;
-                  AdvisoryBot:courseName "Systems Programming" ;
-                  AdvisoryBot:courseNumber "CS 355" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS385
-AdvisoryBot:CS385 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Thursday ,
-                                          AdvisoryBot:Tuesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS254 ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#3:05_4:20_pm> ;
-                  AdvisoryBot:courseCRN 10961 ;
-                  AdvisoryBot:courseName "Computer Architecture" ;
-                  AdvisoryBot:courseNumber "CS 385" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS407
-AdvisoryBot:CS407 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:ComputerScienceHonors_BS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#5:55_7:10_pm> ;
-                  AdvisoryBot:courseCRN 10964 ;
-                  AdvisoryBot:courseName "Advanced Algorithms" ;
-                  AdvisoryBot:courseNumber "CS 407" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS410
-AdvisoryBot:CS410 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Thursday ,
-                                          AdvisoryBot:Tuesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS253 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:ComputerScienceHonors_BS ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#1:40_2:55_pm> ;
-                  AdvisoryBot:courseCRN 10969 ;
-                  AdvisoryBot:courseName "Software Engineering" ;
-                  AdvisoryBot:courseNumber "CS 410" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS416
-AdvisoryBot:CS416 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Morning ,
-                                          AdvisoryBot:Wednesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS254 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:ComputerScienceHonors_BS ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ;
-                  AdvisoryBot:timeOffered AdvisoryBot:Evening ;
-                  AdvisoryBot:courseCRN 10971 ;
-                  AdvisoryBot:courseName "Web Programming" ;
-                  AdvisoryBot:courseNumber "CS 416" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS455
-AdvisoryBot:CS455 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:ComputerScienceHonors_BS ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#10:50_12:05_pm> ;
-                  AdvisoryBot:courseCRN 43173 ;
-                  AdvisoryBot:courseName "Secure Software Development" ;
-                  AdvisoryBot:courseNumber "CS 455" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS460
-AdvisoryBot:CS460 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Thursday ,
-                                          AdvisoryBot:Tuesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS253 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:ComputerScienceHonors_BS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#4:30_5:45_pm> ;
-                  AdvisoryBot:courseCRN 10974 ;
-                  AdvisoryBot:courseName "DataBase Concepts" ;
-                  AdvisoryBot:courseNumber "CS 460" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS463
-AdvisoryBot:CS463 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Wednesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS253 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:ComputerScienceHonors_BS ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#12:15_1:30_pm> ;
-                  AdvisoryBot:courseCRN 40431 ;
-                  AdvisoryBot:courseName "Algorithms" ;
-                  AdvisoryBot:courseNumber "CS 463" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS464
-AdvisoryBot:CS464 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ,
-                                          AdvisoryBot:Wednesday ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:ComputerScienceHonors_BS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#10:50_12:05_pm> ;
-                  AdvisoryBot:courseCRN 10977 ;
-                  AdvisoryBot:courseName "Programming Language" ;
-                  AdvisoryBot:courseNumber "CS 464" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS481
-AdvisoryBot:CS481 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Thursday ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:ComputerScienceHonors_BS ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#5:55_7:10_pm> ;
-                  AdvisoryBot:courseCRN 40432 ;
-                  AdvisoryBot:courseName "Operating System Design" ;
-                  AdvisoryBot:courseNumber "CS 481" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS492
-AdvisoryBot:CS492 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Thursday ,
-                                          AdvisoryBot:Tuesday ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:ComputerScienceHonors_BS ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#12:15_1:30_pm> ;
-                  AdvisoryBot:courseCRN 40433 ;
-                  AdvisoryBot:courseName "Computer Security" ;
-                  AdvisoryBot:courseNumber "CS 492" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS493
-AdvisoryBot:CS493 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ,
-                                          AdvisoryBot:Wednesday ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:ComputerScienceHonors_BS ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#10:50_12:05_pm> ;
-                  AdvisoryBot:courseCRN 10979 ;
-                  AdvisoryBot:courseName "Secure Software Systems" ;
-                  AdvisoryBot:courseNumber "CS 493" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS494
-AdvisoryBot:CS494 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ,
-                                          AdvisoryBot:Wednesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS354 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:ComputerScienceHonors_BS ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#3:05_4:20_pm> ;
-                  AdvisoryBot:courseCRN 10980 ;
-                  AdvisoryBot:courseName "Cryptographic System" ;
-                  AdvisoryBot:courseNumber "CS 494" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS498
-AdvisoryBot:CS498 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Undergraduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS253 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:ComputerScienceHonors_BS ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#1:40_2:55_pm> ;
-                  AdvisoryBot:courseCRN 40435 ;
-                  AdvisoryBot:courseName "Senior Project" ;
-                  AdvisoryBot:courseNumber "CS 498" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS500
-AdvisoryBot:CS500 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ,
-                                          AdvisoryBot:Wednesday ;
-                  AdvisoryBot:hasRecommendedPrerequisite AdvisoryBot:AD_CIT ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:isPrerequisiteFor AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:isRequiredCoreFor AdvisoryBot:CIT_CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ,
-                                              AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered AdvisoryBot:Evening ,
-                                          <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#7:20_8:35_pm> ;
-                  AdvisoryBot:courseCRN 10981 ;
-                  AdvisoryBot:courseDescription "Concepts of computer science, including software analysis and design, inheritance, polymorphism, recursion, elementary sorting, and programming using arrays, sequential files, and linked lists." ;
-                  AdvisoryBot:courseName "Computer Science for CIT" ;
-                  AdvisoryBot:courseNumber "CS 500" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS501
-AdvisoryBot:CS501 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ,
-                                          AdvisoryBot:Wednesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS500 ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:isRequiredCoreFor AdvisoryBot:CIT_CS ,
-                                                AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ,
-                                              AdvisoryBot:Summer ;
-                  AdvisoryBot:timeOffered AdvisoryBot:Evening ;
-                  AdvisoryBot:courseCRN 13380 ;
-                  AdvisoryBot:courseDescription "Software design for structuring and manipulating data. Topics include stacks, queues, hash tables, trees, graphs, advanced sorting, and analysis of algorithms." ;
-                  AdvisoryBot:courseName "Foundations of Computer Science" ;
-                  AdvisoryBot:courseNumber "CS 501" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS502
-AdvisoryBot:CS502 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Thursday ,
-                                          AdvisoryBot:Tuesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS500 ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:isPrerequisiteFor AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:isRequiredCoreFor AdvisoryBot:CIT_CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ;
-                  AdvisoryBot:timeOffered AdvisoryBot:Evening ;
-                  AdvisoryBot:courseCRN 13381 ;
-                  AdvisoryBot:courseDescription "Comprehensive coverage of the concepts of computer networking, and computer architecture and organization required to enable students to understand and efficiently utilize computing and communication resources. Development of distributed computer applications." ;
-                  AdvisoryBot:courseNumber "CS 502" ;
-                  AdvisoryBot:programName "Computing and Communications Technologies" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS505
-AdvisoryBot:CS505 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS501 ;
-                  AdvisoryBot:hasRequiredPrerequisite AdvisoryBot:AD_SE ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:CIT_CS ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:isRequiredCoreFor AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ;
-                  AdvisoryBot:timeOffered AdvisoryBot:Evening ;
-                  AdvisoryBot:courseDescription "An in-depth study of designing and implementing complex systems using proven architectural patterns for structuring, creating, and manipulating object orientated systems. Students will learn how to apply and implement a broad array of proven design patterns, when they should be used, and how to implement them in practice." ;
-                  AdvisoryBot:courseName "Design Patterns" ;
-                  AdvisoryBot:courseNumber "CS 505" ;
-                  AdvisoryBot:courseRequirement "Full admission in SE program, or CS 501." ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS506
-AdvisoryBot:CS506 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Thursday ,
-                                          AdvisoryBot:Tuesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS501 ;
-                  AdvisoryBot:hasRequiredPrerequisite AdvisoryBot:AD_SE ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:CIT_CS ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:isRequiredFor AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#4:30_5:45_pm> ;
-                  AdvisoryBot:courseCRN 40428 ;
-                  AdvisoryBot:courseDescription "Detailed study on purpose of identifying any errors, gaps or missing requirements and rectifying it." ;
-                  AdvisoryBot:courseName "Software Testing & Quality Assur" ;
-                  AdvisoryBot:courseNumber "CS 506" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS508
-AdvisoryBot:CS508 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ,
-                                          AdvisoryBot:Wednesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS501 ;
-                  AdvisoryBot:hasRequiredPrerequisite AdvisoryBot:AD_SE ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:CIT_CS ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:isRequiredFor AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#4:30_5:45_pm> ;
-                  AdvisoryBot:courseCRN 40416 ;
-                  AdvisoryBot:courseDescription "Study on shared software system among multiple computers and how they communicate and coordinate actions in order to appear as a single coherent systm." ;
-                  AdvisoryBot:courseName "Distributed Computing" ;
-                  AdvisoryBot:courseNumber "CS 508" ;
-                  AdvisoryBot:creditsPerSemester 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS510
-AdvisoryBot:CS510 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ,
-                                          AdvisoryBot:Wednesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS501 ;
-                  AdvisoryBot:hasRequiredPrerequisite AdvisoryBot:AD_SE ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:CIT_CS ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:isRequiredCoreFor AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#4:30_5:45_pm> ;
-                  AdvisoryBot:courseCRN 43172 ;
-                  AdvisoryBot:courseName "Fund of Software Engineering" ;
-                  AdvisoryBot:courseNumber "CS 510" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS525
-AdvisoryBot:CS525 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Thursday ,
-                                          AdvisoryBot:Tuesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS501 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:CIT_CS ,
-                                            AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#4:30_5:45_pm> ;
-                  AdvisoryBot:courseCRN 10965 ;
-                  AdvisoryBot:courseDescription "Study on Algorithms which are usually designed to be able to process huge data." ;
-                  AdvisoryBot:courseName "Advanced Algorithms" ;
-                  AdvisoryBot:courseNumber "CS 525" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS530
-AdvisoryBot:CS530 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ,
-                                          AdvisoryBot:Wednesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS510 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:CIT_CS ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:isRequiredFor AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#3:05_4:20_pm> ;
-                  AdvisoryBot:courseCRN 13387 ;
-                  AdvisoryBot:courseDescription "Advanced topics in software engineering" ;
-                  AdvisoryBot:courseName "Advanced Software Engineering" ;
-                  AdvisoryBot:courseNumber "CS 530" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS550
-AdvisoryBot:CS550 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ,
-                                          AdvisoryBot:Wednesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS501 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:CIT_CS ,
-                                            AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#4:30_5:45_pm> ;
-                  AdvisoryBot:courseCRN 10967 ;
-                  AdvisoryBot:courseName "Usable Security & Privacy" ;
-                  AdvisoryBot:courseNumber "CS 550" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS560
-AdvisoryBot:CS560 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Thursday ,
-                                          AdvisoryBot:Tuesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS501 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:CIT_CS ,
-                                            AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#3:05_4:20_pm> ;
-                  AdvisoryBot:courseDescription "Study on developing and creating of App for mobile devices." ;
-                  AdvisoryBot:courseName "Adv Tpc:Mobile App Development" ;
-                  AdvisoryBot:courseNumber "CS 560" ;
-                  AdvisoryBot:numberCredits 3 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS565
-AdvisoryBot:CS565 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS501 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:CIT_CS ,
-                                            AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:courseName "Introduction to Bioinfomatics" ;
-                  AdvisoryBot:courseNumber "CS 565" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS570
-AdvisoryBot:CS570 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS501 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:CIT_CS ,
-                                            AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:courseCRN 40430 ,
-                                        "Theory and development of Computer Systems to perform tasks that normally require human Intelligence." ;
-                  AdvisoryBot:courseName "Tpcs in Artificial Intelligance" ;
-                  AdvisoryBot:courseNumber "CS 570" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS575
-AdvisoryBot:CS575 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Monday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS501 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:CIT_CS ,
-                                            AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#1:40_2:55_pm> ;
-                  AdvisoryBot:courseCRN 40421 ;
-                  AdvisoryBot:courseDescription "Different approach to regular Web application where data can be easily understood by the machine and provide more applicable resources to the users." ;
-                  AdvisoryBot:courseName "Linked Data Engineering" ;
-                  AdvisoryBot:courseNumber "CS 575" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS580
-AdvisoryBot:CS580 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:daysOffered AdvisoryBot:Thursday ,
-                                          AdvisoryBot:Tuesday ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS501 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:CIT_CS ,
-                                            AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ;
-                  AdvisoryBot:timeOffered <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#4:30_5:45_pm> ;
-                  AdvisoryBot:courseCRN 10976 ;
-                  AdvisoryBot:courseDescription "Detailed study on database concept." ;
-                  AdvisoryBot:courseName "Tpcs in DataBase System" ;
-                  AdvisoryBot:courseNumber "CS 580" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS590
-AdvisoryBot:CS590 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:hasPrerequisite AdvisoryBot:CS501 ;
-                  AdvisoryBot:isElectiveFor AdvisoryBot:CIT_CS ,
-                                            AdvisoryBot:CIT_SE ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Spring ;
-                  AdvisoryBot:courseName "Topics in High Prerformance computing" ;
-                  AdvisoryBot:courseNumber "CS 590" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CS595
-AdvisoryBot:CS595 rdf:type owl:NamedIndividual ,
-                           AdvisoryBot:Graduate ;
-                  AdvisoryBot:isOfferedBy AdvisoryBot:CS ;
-                  AdvisoryBot:semesterOffered AdvisoryBot:Fall ,
-                                              AdvisoryBot:Spring ;
-                  AdvisoryBot:courseName "Graduate Research Seminar" ;
-                  AdvisoryBot:courseNumber "CS 595" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#ComputerScienceAlternative
-AdvisoryBot:ComputerScienceAlternative rdf:type owl:NamedIndividual ,
-                                                AdvisoryBot:UndergraduateProgram .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#ComputerScienceHonors_BS
-AdvisoryBot:ComputerScienceHonors_BS rdf:type owl:NamedIndividual ,
-                                              AdvisoryBot:UndergraduateProgram ;
-                                     AdvisoryBot:hasPrerequisite AdvisoryBot:MATH152 ,
-                                                                 AdvisoryBot:MATH217 ;
-                                     AdvisoryBot:hasRequiredCore AdvisoryBot:CS151 ,
-                                                                 AdvisoryBot:CS152 ,
-                                                                 AdvisoryBot:CS253 ,
-                                                                 AdvisoryBot:CS254 ,
-                                                                 AdvisoryBot:CS354 ,
-                                                                 AdvisoryBot:CS355 ;
-                                     AdvisoryBot:numberCredits 110 .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#ComputerScienceMinor
-AdvisoryBot:ComputerScienceMinor rdf:type owl:NamedIndividual ,
-                                          AdvisoryBot:UndergraduateProgram .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Core_Completed
-AdvisoryBot:Core_Completed rdf:type owl:NamedIndividual ,
-                                    AdvisoryBot:Condition .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#CybersecurityConcentration
-AdvisoryBot:CybersecurityConcentration rdf:type owl:NamedIndividual ,
-                                                AdvisoryBot:UndergraduateProgram .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Evening
-AdvisoryBot:Evening rdf:type owl:NamedIndividual ,
-                             AdvisoryBot:Time .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Fall
-AdvisoryBot:Fall rdf:type owl:NamedIndividual ,
-                          AdvisoryBot:Semester .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Friday
-AdvisoryBot:Friday rdf:type owl:NamedIndividual ,
-                            AdvisoryBot:Day .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#FullTime
-AdvisoryBot:FullTime rdf:type owl:NamedIndividual ,
-                              AdvisoryBot:Student ;
-                     AdvisoryBot:creditsPerSemester "Min 9, max 15" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Hybrid
-AdvisoryBot:Hybrid rdf:type owl:NamedIndividual ,
-                            AdvisoryBot:Time .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#MATH152
-AdvisoryBot:MATH152 rdf:type owl:NamedIndividual ,
-                             AdvisoryBot:Undergraduate .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#MATH217
-AdvisoryBot:MATH217 rdf:type owl:NamedIndividual ,
-                             AdvisoryBot:Undergraduate .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Min_18_Credits
-AdvisoryBot:Min_18_Credits rdf:type owl:NamedIndividual ,
-                                    AdvisoryBot:Condition .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Min_3.0_GPA
-AdvisoryBot:Min_3.0_GPA rdf:type owl:NamedIndividual ,
-                                 AdvisoryBot:Condition .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Monday
-AdvisoryBot:Monday rdf:type owl:NamedIndividual ,
-                            AdvisoryBot:Day .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Morning
-AdvisoryBot:Morning rdf:type owl:NamedIndividual ,
-                             AdvisoryBot:Time .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Online
-AdvisoryBot:Online rdf:type owl:NamedIndividual ,
-                            AdvisoryBot:Time .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#PartTime
-AdvisoryBot:PartTime rdf:type owl:NamedIndividual ,
-                              AdvisoryBot:Student ;
-                     AdvisoryBot:creditsPerSemester "Max 6" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Saturday
-AdvisoryBot:Saturday rdf:type owl:NamedIndividual ,
-                              AdvisoryBot:Day .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Spring
-AdvisoryBot:Spring rdf:type owl:NamedIndividual ,
-                            AdvisoryBot:Semester .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Summer
-AdvisoryBot:Summer rdf:type owl:NamedIndividual ,
-                            AdvisoryBot:Semester .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Sunday
-AdvisoryBot:Sunday rdf:type owl:NamedIndividual ,
-                            AdvisoryBot:Day .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Thursday
-AdvisoryBot:Thursday rdf:type owl:NamedIndividual ,
-                              AdvisoryBot:Day .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Tuesday
-AdvisoryBot:Tuesday rdf:type owl:NamedIndividual ,
-                             AdvisoryBot:Day .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Wednesday
-AdvisoryBot:Wednesday rdf:type owl:NamedIndividual ,
-                               AdvisoryBot:Day .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#10:50_12:05_pm
-<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#10:50_12:05_pm> rdf:type owl:NamedIndividual ,
-                                                                       AdvisoryBot:Time .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#12:15_1:30_pm
-<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#12:15_1:30_pm> rdf:type owl:NamedIndividual ,
-                                                                      AdvisoryBot:Time .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#1:40_2:55_pm
-<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#1:40_2:55_pm> rdf:type owl:NamedIndividual ,
-                                                                     AdvisoryBot:Time .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#3:05_4:20_pm
-<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#3:05_4:20_pm> rdf:type owl:NamedIndividual ,
-                                                                     AdvisoryBot:Time .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#4:30_5:45_pm
-<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#4:30_5:45_pm> rdf:type owl:NamedIndividual ,
-                                                                     AdvisoryBot:Time .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#5:55_7:10_pm
-<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#5:55_7:10_pm> rdf:type owl:NamedIndividual ,
-                                                                     AdvisoryBot:Time .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#7:20_8:35_pm
-<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#7:20_8:35_pm> rdf:type owl:NamedIndividual ,
-                                                                     AdvisoryBot:Time .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#8:45_10_pm
-<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#8:45_10_pm> rdf:type owl:NamedIndividual ,
-                                                                   AdvisoryBot:Time .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#8_9:15_am
-<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#8_9:15_am> rdf:type owl:NamedIndividual ,
-                                                                  AdvisoryBot:Time .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#9:25_10:40_am
-<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#9:25_10:40_am> rdf:type owl:NamedIndividual ,
-                                                                      AdvisoryBot:Time .
-
-
-###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+AdvisoryBot:semesterOffered
+        a                         owl:ObjectProperty , rdf:Property , rdfs:Resource ;
+        rdfs:domain               AdvisoryBot:Course ;
+        rdfs:range                AdvisoryBot:Semester ;
+        rdfs:subPropertyOf        AdvisoryBot:semesterOffered , owl:topObjectProperty ;
+        owl:equivalentProperty    AdvisoryBot:semesterOffered ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:Person  a        owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Person ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Person .
+
+AdvisoryBot:hasRequiredCourse
+        a                         owl:ObjectProperty ;
+        rdfs:domain               AdvisoryBot:AcademicProgram ;
+        rdfs:range                AdvisoryBot:Course ;
+        rdfs:subPropertyOf        owl:topObjectProperty , AdvisoryBot:hasRequiredCourse ;
+        owl:equivalentProperty    AdvisoryBot:hasRequiredCourse ;
+        owl:inverseOf             AdvisoryBot:isRequiredCourseFor , AdvisoryBot:isRequiredFor ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:CS500  a                   owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          10981 ;
+        AdvisoryBot:courseDescription  "Concepts of computer science, including software analysis and design, inheritance, polymorphism, recursion, elementary sorting, and programming using arrays, sequential files, and linked lists." ;
+        AdvisoryBot:courseName         "Computer Science for CIT" ;
+        AdvisoryBot:courseNumber       "CS 500" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Monday , AdvisoryBot:Wednesday ;
+        AdvisoryBot:hasPrerequisite    AdvisoryBot:AD_CIT ;
+        AdvisoryBot:hasRecommendedPrerequisite
+                AdvisoryBot:AD_CIT ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CIT_SE , AdvisoryBot:CS502 , AdvisoryBot:CS525 , AdvisoryBot:CS508 , AdvisoryBot:CS570 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        AdvisoryBot:isRequiredCoreFor  AdvisoryBot:CIT_CS ;
+        AdvisoryBot:numberCredits      3 ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Fall , AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered        AdvisoryBot:7:20_8:35_pm , AdvisoryBot:Evening ;
+        owl:differentFrom              AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                     AdvisoryBot:CS500 .
+
+AdvisoryBot:9:25_10:40_am
+        a           owl:Thing , AdvisoryBot:Time , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:9:25_10:40_am .
+
+AdvisoryBot:Saturday  a  owl:Thing , AdvisoryBot:Day , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Saturday .
+
+AdvisoryBot:Monday  a  owl:Thing , AdvisoryBot:Day , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Monday .
+
+AdvisoryBot:Department
+        a                    owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , rdfs:Resource , AdvisoryBot:Department ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Department .
+
+AdvisoryBot:CS595  a                 owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseName       "Graduate Research Seminar" ;
+        AdvisoryBot:courseNumber     "CS 595" ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Fall , AdvisoryBot:Spring ;
+        owl:differentFrom            AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                   AdvisoryBot:CS595 .
+
+AdvisoryBot:CIT_CS  a                  owl:Thing , AdvisoryBot:AcademicProgram , AdvisoryBot:GraduateProgram , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:hasElective        AdvisoryBot:CS560 , AdvisoryBot:CS575 , AdvisoryBot:CS525 , AdvisoryBot:CS508 , AdvisoryBot:CS570 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        AdvisoryBot:hasRequiredCore    AdvisoryBot:CS501 , AdvisoryBot:CS502 , AdvisoryBot:CS500 , AdvisoryBot:CET501 ;
+        AdvisoryBot:hasRequiredCourse  AdvisoryBot:CIT595 , AdvisoryBot:CET501 ;
+        AdvisoryBot:numberCredits      33 ;
+        AdvisoryBot:programAdmissionRequirements
+                "GPA of 2.7/4.0 and GPA of 3.0 in post-baccalaureate couse work; no formal CS background required." ;
+        owl:differentFrom              AdvisoryBot:CybersecurityConcentration , AdvisoryBot:ComputerScienceMinor , AdvisoryBot:ComputerScienceHonors_BS , AdvisoryBot:ComputerScienceAlternative ;
+        owl:sameAs                     AdvisoryBot:CIT_CS .
+
+AdvisoryBot:hasRequiredCore
+        a                         owl:ObjectProperty , rdf:Property , rdfs:Resource ;
+        rdfs:comment              "A program's required core classes." ;
+        rdfs:domain               AdvisoryBot:AcademicProgram ;
+        rdfs:range                AdvisoryBot:Course ;
+        rdfs:subPropertyOf        owl:topObjectProperty , AdvisoryBot:hasRequiredCore ;
+        owl:equivalentProperty    AdvisoryBot:hasRequiredCore ;
+        owl:inverseOf             AdvisoryBot:isRequiredCoreFor ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:CET501  a                  owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseName         "Applied Networking Technology I" ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CEGT ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:CIT595 ;
+        AdvisoryBot:isRequiredCoreFor  AdvisoryBot:CIT_CS , AdvisoryBot:CIT_SE ;
+        AdvisoryBot:isRequiredCourseFor
+                AdvisoryBot:CIT_CS ;
+        AdvisoryBot:isRequiredFor      AdvisoryBot:CIT_CS ;
+        AdvisoryBot:isRequiredPrerequisiteFor
+                AdvisoryBot:CIT595 ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Fall ;
+        AdvisoryBot:timeOffered        AdvisoryBot:Online ;
+        owl:differentFrom              AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                     AdvisoryBot:CET501 .
+
+AdvisoryBot:1:40_2:55_pm
+        a           owl:Thing , AdvisoryBot:Time , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:1:40_2:55_pm .
+
+AdvisoryBot:programAdmissionRequirements
+        a                         owl:DatatypeProperty ;
+        rdfs:subPropertyOf        AdvisoryBot:programAdmissionRequirements , owl:topDataProperty ;
+        owl:equivalentProperty    AdvisoryBot:programAdmissionRequirements ;
+        owl:propertyDisjointWith  owl:bottomDataProperty .
+
+AdvisoryBot:CS354  a                   AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          40402 ;
+        AdvisoryBot:courseName         "Digital Systems Design" ;
+        AdvisoryBot:courseNumber       "CS 354" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Monday , AdvisoryBot:Wednesday ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:CS494 ;
+        AdvisoryBot:isRequiredCoreFor  AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:numberCredits      3 ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered        AdvisoryBot:9:25_10:40_am ;
+        owl:differentFrom              AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                     AdvisoryBot:CS354 .
+
+AdvisoryBot:PartTime  a                 owl:Thing , AdvisoryBot:Person , AdvisoryBot:Student , owl:NamedIndividual ;
+        AdvisoryBot:creditsPerSemester  "Max 6" ;
+        owl:sameAs                      AdvisoryBot:PartTime .
+
+AdvisoryBot:CS505  a                   owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseDescription  "An in-depth study of designing and implementing complex systems using proven architectural patterns for structuring, creating, and manipulating object orientated systems. Students will learn how to apply and implement a broad array of proven design patterns, when they should be used, and how to implement them in practice." ;
+        AdvisoryBot:courseName         "Design Patterns" ;
+        AdvisoryBot:courseNumber       "CS 505" ;
+        AdvisoryBot:courseRequirement  "Full admission in SE program, or CS 501." ;
+        AdvisoryBot:hasPrerequisite    AdvisoryBot:CS501 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT , AdvisoryBot:AD_SE ;
+        AdvisoryBot:hasRequiredPrerequisite
+                AdvisoryBot:AD_SE ;
+        AdvisoryBot:isElectiveFor      AdvisoryBot:CIT_CS ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:isRequiredCoreFor  AdvisoryBot:CIT_SE ;
+        AdvisoryBot:numberCredits      3 ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Fall ;
+        AdvisoryBot:timeOffered        AdvisoryBot:Evening ;
+        owl:differentFrom              AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                     AdvisoryBot:CS505 .
+
+AdvisoryBot:Tuesday  a  owl:Thing , AdvisoryBot:Time , AdvisoryBot:Day , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Tuesday .
+
+AdvisoryBot:Min_3.0_GPA
+        a                              owl:Thing , AdvisoryBot:Condition , owl:NamedIndividual ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:CIT595 ;
+        AdvisoryBot:isRequiredPrerequisiteFor
+                AdvisoryBot:CIT595 ;
+        owl:sameAs                     AdvisoryBot:Min_3.0_GPA .
+
+AdvisoryBot:GraduateProgram
+        a                    owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:AcademicProgram , AdvisoryBot:GraduateProgram , rdfs:Resource ;
+        owl:disjointWith     owl:Nothing , AdvisoryBot:UndergraduateProgram ;
+        owl:equivalentClass  AdvisoryBot:GraduateProgram .
+
+AdvisoryBot:UndergraduateProgram
+        a                    owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:AcademicProgram , AdvisoryBot:UndergraduateProgram , rdfs:Resource ;
+        owl:disjointWith     owl:Nothing , AdvisoryBot:GraduateProgram ;
+        owl:equivalentClass  AdvisoryBot:UndergraduateProgram .
+
+AdvisoryBot:CS254  a                   AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          10954 ;
+        AdvisoryBot:courseName         "Assembly Language" ;
+        AdvisoryBot:courseNumber       "CS 254" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Monday , AdvisoryBot:Wednesday ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:CS385 , AdvisoryBot:CS416 , AdvisoryBot:CS355 ;
+        AdvisoryBot:isRequiredCoreFor  AdvisoryBot:ComputerScienceMinor , AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Fall , AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered        AdvisoryBot:12:15_1:30_pm ;
+        owl:differentFrom              AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                     AdvisoryBot:CS254 .
+
+AdvisoryBot:courseRequirement
+        a                         owl:DatatypeProperty ;
+        rdfs:comment              "Defines who is eligible to take the course." ;
+        rdfs:subPropertyOf        AdvisoryBot:courseRequirement , owl:topDataProperty ;
+        owl:equivalentProperty    AdvisoryBot:courseRequirement ;
+        owl:propertyDisjointWith  owl:bottomDataProperty .
+
+AdvisoryBot:isRequiredPrerequisiteFor
+        a                         owl:ObjectProperty , owl:TransitiveProperty , rdf:Property , rdfs:Resource ;
+        rdfs:subPropertyOf        AdvisoryBot:isPrerequisiteFor , owl:topObjectProperty , AdvisoryBot:isRequiredPrerequisiteFor ;
+        owl:equivalentProperty    AdvisoryBot:isRequiredPrerequisiteFor ;
+        owl:inverseOf             AdvisoryBot:hasRequiredPrerequisite ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:Undergraduate
+        a                    owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Course , AdvisoryBot:Undergraduate , rdfs:Resource ;
+        owl:disjointWith     AdvisoryBot:Graduate , owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Undergraduate , _:b0 , _:b1 , _:b2 .
+
+AdvisoryBot:hasPrerequisite
+        a                         owl:ObjectProperty , owl:TransitiveProperty , rdf:Property , rdfs:Resource ;
+        rdfs:subPropertyOf        owl:topObjectProperty , AdvisoryBot:hasPrerequisite ;
+        owl:equivalentProperty    AdvisoryBot:hasPrerequisite ;
+        owl:inverseOf             AdvisoryBot:isPrerequisiteFor ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:isRequiredFor
+        a                         owl:ObjectProperty , rdf:Property , rdfs:Resource ;
+        rdfs:comment              "Core course required for a program." ;
+        rdfs:domain               AdvisoryBot:Course ;
+        rdfs:range                AdvisoryBot:AcademicProgram ;
+        rdfs:subPropertyOf        owl:topObjectProperty , AdvisoryBot:isRequiredCourseFor , AdvisoryBot:isRequiredFor ;
+        owl:equivalentProperty    AdvisoryBot:isRequiredCourseFor , AdvisoryBot:isRequiredFor ;
+        owl:inverseOf             AdvisoryBot:hasRequiredCourse ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:3:05_4:20_pm
+        a           owl:Thing , AdvisoryBot:Time , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:3:05_4:20_pm .
+
+AdvisoryBot:CS  a           owl:Thing , AdvisoryBot:Department , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:offers  AdvisoryBot:CS501 , AdvisoryBot:CS595 , AdvisoryBot:CS385 , AdvisoryBot:CS152 , AdvisoryBot:CS354 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS492 , AdvisoryBot:CS505 , AdvisoryBot:CS481 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS291 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS560 , AdvisoryBot:CS463 , AdvisoryBot:CS151 , AdvisoryBot:CS575 , AdvisoryBot:CS525 , AdvisoryBot:CS508 , AdvisoryBot:CS502 , AdvisoryBot:CS570 , AdvisoryBot:CS455 , AdvisoryBot:CS498 , AdvisoryBot:CS494 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CS550 ;
+        owl:sameAs          AdvisoryBot:CS .
+
+AdvisoryBot:Student  a       owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Person , AdvisoryBot:Student ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Student .
+
+AdvisoryBot:CS525  a                   owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          10965 ;
+        AdvisoryBot:courseDescription  "Study on Algorithms which are usually designed to be able to process huge data." ;
+        AdvisoryBot:courseName         "Advanced Algorithms" ;
+        AdvisoryBot:courseNumber       "CS 525" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Thursday , AdvisoryBot:Tuesday ;
+        AdvisoryBot:hasPrerequisite    AdvisoryBot:CS501 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT ;
+        AdvisoryBot:isElectiveFor      AdvisoryBot:CIT_CS , AdvisoryBot:CIT_SE ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Fall ;
+        AdvisoryBot:timeOffered        AdvisoryBot:4:30_5:45_pm ;
+        owl:differentFrom              AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                     AdvisoryBot:CS525 .
+
+AdvisoryBot:ComputerScienceHonors_BS
+        a                            owl:Thing , AdvisoryBot:AcademicProgram , AdvisoryBot:UndergraduateProgram , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:hasElective      AdvisoryBot:CS463 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS455 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS494 , AdvisoryBot:CS416 , AdvisoryBot:CS407 , AdvisoryBot:CS460 , AdvisoryBot:CS410 , AdvisoryBot:CS492 ;
+        AdvisoryBot:hasPrerequisite  AdvisoryBot:MATH217 , AdvisoryBot:MATH152 ;
+        AdvisoryBot:hasRequiredCore  AdvisoryBot:CS151 , AdvisoryBot:CS253 , AdvisoryBot:CS152 , AdvisoryBot:CS354 , AdvisoryBot:CS355 , AdvisoryBot:CS254 ;
+        AdvisoryBot:numberCredits    110 ;
+        owl:differentFrom            AdvisoryBot:CIT_SE , AdvisoryBot:CIT_CS ;
+        owl:sameAs                   AdvisoryBot:ComputerScienceHonors_BS .
+
+AdvisoryBot:CS481  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        40432 ;
+        AdvisoryBot:courseName       "Operating System Design" ;
+        AdvisoryBot:courseNumber     "CS 481" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Thursday ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:numberCredits    3 ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered      AdvisoryBot:5:55_7:10_pm ;
+        owl:differentFrom            AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                   AdvisoryBot:CS481 .
+
+AdvisoryBot:CS494  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        10980 ;
+        AdvisoryBot:courseName       "Cryptographic System" ;
+        AdvisoryBot:courseNumber     "CS 494" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Monday , AdvisoryBot:Wednesday ;
+        AdvisoryBot:hasPrerequisite  AdvisoryBot:CS354 ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:numberCredits    3 ;
+        AdvisoryBot:timeOffered      AdvisoryBot:3:05_4:20_pm ;
+        owl:differentFrom            AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                   AdvisoryBot:CS494 .
+
+AdvisoryBot:4:30_5:45_pm
+        a           owl:Thing , AdvisoryBot:Time , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:4:30_5:45_pm .
+
+AdvisoryBot:courseName
+        a                         owl:DatatypeProperty ;
+        rdfs:subPropertyOf        AdvisoryBot:courseName , owl:topDataProperty ;
+        owl:equivalentProperty    AdvisoryBot:courseName ;
+        owl:propertyDisjointWith  owl:bottomDataProperty .
+
+AdvisoryBot:Spring  a  owl:Thing , AdvisoryBot:Semester , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Spring .
+
+AdvisoryBot:CIT_SE  a                  owl:Thing , AdvisoryBot:AcademicProgram , AdvisoryBot:GraduateProgram , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:hasElective        AdvisoryBot:CS590 , AdvisoryBot:CS560 , AdvisoryBot:CS575 , AdvisoryBot:CS525 , AdvisoryBot:CS565 , AdvisoryBot:CS570 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        AdvisoryBot:hasPrerequisite    AdvisoryBot:CS502 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT ;
+        AdvisoryBot:hasRequiredCore    AdvisoryBot:CS505 , AdvisoryBot:CS501 , AdvisoryBot:CS510 , AdvisoryBot:CET501 ;
+        AdvisoryBot:hasRequiredCourse  AdvisoryBot:CS508 , AdvisoryBot:CS530 , AdvisoryBot:CS506 ;
+        AdvisoryBot:numberCredits      33 ;
+        AdvisoryBot:programAdmissionRequirements
+                "GPA of 3.0 in baccalaureate couse work; formal CS background required." ;
+        owl:differentFrom              AdvisoryBot:CybersecurityConcentration , AdvisoryBot:ComputerScienceMinor , AdvisoryBot:ComputerScienceHonors_BS , AdvisoryBot:ComputerScienceAlternative ;
+        owl:sameAs                     AdvisoryBot:CIT_SE .
+
+AdvisoryBot:5:55_7:10_pm
+        a           owl:Thing , AdvisoryBot:Time , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:5:55_7:10_pm .
+
+AdvisoryBot:CS560  a                   owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseDescription  "Study on developing and creating of App for mobile devices." ;
+        AdvisoryBot:courseName         "Adv Tpc:Mobile App Development" ;
+        AdvisoryBot:courseNumber       "CS 560" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Thursday , AdvisoryBot:Tuesday ;
+        AdvisoryBot:hasPrerequisite    AdvisoryBot:CS501 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT ;
+        AdvisoryBot:isElectiveFor      AdvisoryBot:CIT_CS , AdvisoryBot:CIT_SE ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:numberCredits      3 ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered        AdvisoryBot:3:05_4:20_pm ;
+        owl:differentFrom              AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                     AdvisoryBot:CS560 .
+
+AdvisoryBot:daysOffered
+        a                         owl:ObjectProperty , rdf:Property , rdfs:Resource ;
+        rdfs:comment              "Day/dates of the week the course is currently offered." ;
+        rdfs:domain               AdvisoryBot:Course ;
+        rdfs:range                AdvisoryBot:Day ;
+        rdfs:subPropertyOf        AdvisoryBot:daysOffered , owl:topObjectProperty ;
+        owl:equivalentProperty    AdvisoryBot:daysOffered ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:Evening  a  owl:Thing , AdvisoryBot:Time , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Evening .
+
+AdvisoryBot:courseNumber
+        a                         owl:DatatypeProperty ;
+        rdfs:subPropertyOf        AdvisoryBot:courseNumber , owl:topDataProperty ;
+        owl:equivalentProperty    AdvisoryBot:courseNumber ;
+        owl:propertyDisjointWith  owl:bottomDataProperty .
+
+AdvisoryBot:CS460  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        10974 ;
+        AdvisoryBot:courseName       "DataBase Concepts" ;
+        AdvisoryBot:courseNumber     "CS 460" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Thursday , AdvisoryBot:Tuesday ;
+        AdvisoryBot:hasPrerequisite  AdvisoryBot:CS151 , AdvisoryBot:CS253 ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:numberCredits    3 ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Fall ;
+        AdvisoryBot:timeOffered      AdvisoryBot:4:30_5:45_pm ;
+        owl:differentFrom            AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                   AdvisoryBot:CS460 .
+
+AdvisoryBot:CS253  a                   AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          10951 ;
+        AdvisoryBot:courseName         "Data and File Structure" ;
+        AdvisoryBot:courseNumber       "CS 253" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Thursday , AdvisoryBot:Tuesday ;
+        AdvisoryBot:hasPrerequisite    AdvisoryBot:CS151 ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:CS463 , AdvisoryBot:CS498 , AdvisoryBot:CS460 , AdvisoryBot:CS410 ;
+        AdvisoryBot:isRequiredCoreFor  AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Fall ;
+        AdvisoryBot:timeOffered        AdvisoryBot:12:15_1:30_pm ;
+        owl:differentFrom              AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                     AdvisoryBot:CS253 .
+
+AdvisoryBot:isElectiveFor
+        a                         owl:ObjectProperty , rdf:Property , rdfs:Resource ;
+        rdfs:comment              "Elective course for a program." ;
+        rdfs:domain               AdvisoryBot:Course ;
+        rdfs:range                AdvisoryBot:AcademicProgram ;
+        rdfs:subPropertyOf        owl:topObjectProperty , AdvisoryBot:isElectiveFor ;
+        owl:equivalentProperty    AdvisoryBot:isElectiveFor ;
+        owl:inverseOf             AdvisoryBot:hasElective ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+owl:Nothing  a               owl:Class ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Person , AdvisoryBot:Course , AdvisoryBot:Time , AdvisoryBot:AcademicProgram , AdvisoryBot:Condition , AdvisoryBot:Day , AdvisoryBot:GraduateProgram , AdvisoryBot:Undergraduate , AdvisoryBot:Graduate , AdvisoryBot:Student , AdvisoryBot:Semester , AdvisoryBot:Department , AdvisoryBot:UndergraduateProgram ;
+        owl:complementOf     owl:Thing ;
+        owl:disjointWith     owl:Thing , AdvisoryBot:Person , AdvisoryBot:Course , AdvisoryBot:Time , AdvisoryBot:AcademicProgram , AdvisoryBot:Condition , AdvisoryBot:Day , AdvisoryBot:GraduateProgram , AdvisoryBot:Undergraduate , AdvisoryBot:Graduate , AdvisoryBot:Student , owl:Nothing , AdvisoryBot:Semester , AdvisoryBot:Department , AdvisoryBot:UndergraduateProgram ;
+        owl:equivalentClass  owl:Nothing .
+
+AdvisoryBot:8_9:15_am
+        a           owl:Thing , AdvisoryBot:Time , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:8_9:15_am .
+
+owl:bottomDataProperty
+        a                         owl:DatatypeProperty ;
+        rdfs:subPropertyOf        AdvisoryBot:programAdmissionRequirements , AdvisoryBot:numberCredits , AdvisoryBot:courseName , AdvisoryBot:programName , AdvisoryBot:courseNumber , AdvisoryBot:courseRequirement , AdvisoryBot:creditsPerSemester , AdvisoryBot:courseCRN , AdvisoryBot:courseDescription , owl:topDataProperty , AdvisoryBot:programDescription , owl:bottomDataProperty ;
+        owl:equivalentProperty    owl:bottomDataProperty ;
+        owl:propertyDisjointWith  AdvisoryBot:programAdmissionRequirements , AdvisoryBot:numberCredits , AdvisoryBot:courseName , AdvisoryBot:programName , AdvisoryBot:courseNumber , AdvisoryBot:courseRequirement , AdvisoryBot:creditsPerSemester , owl:topDataProperty , AdvisoryBot:courseCRN , AdvisoryBot:courseDescription , AdvisoryBot:programDescription , owl:bottomDataProperty .
+
+AdvisoryBot:Course  a        owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , rdfs:Resource , AdvisoryBot:Course ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Course .
+
+AdvisoryBot:courseDescription
+        a                         owl:DatatypeProperty ;
+        rdfs:subPropertyOf        owl:topDataProperty , AdvisoryBot:courseDescription ;
+        owl:equivalentProperty    AdvisoryBot:courseDescription ;
+        owl:propertyDisjointWith  owl:bottomDataProperty .
+
+AdvisoryBot:numberCredits
+        a                         owl:DatatypeProperty ;
+        rdfs:subPropertyOf        AdvisoryBot:numberCredits , owl:topDataProperty ;
+        owl:equivalentProperty    AdvisoryBot:numberCredits ;
+        owl:propertyDisjointWith  owl:bottomDataProperty .
+
+AdvisoryBot:CIT595  a                owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseName       "Capsstone in CIT" ;
+        AdvisoryBot:hasPrerequisite  AdvisoryBot:CS501 , AdvisoryBot:CS502 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT , AdvisoryBot:Min_18_Credits , AdvisoryBot:CET501 , AdvisoryBot:Min_3.0_GPA ;
+        AdvisoryBot:hasRequiredPrerequisite
+                AdvisoryBot:CS501 , AdvisoryBot:CS502 , AdvisoryBot:Min_18_Credits , AdvisoryBot:CET501 , AdvisoryBot:Min_3.0_GPA ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:isRequiredCourseFor
+                AdvisoryBot:CIT_CS ;
+        AdvisoryBot:isRequiredFor    AdvisoryBot:CIT_CS ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Fall , AdvisoryBot:Spring ;
+        owl:differentFrom            AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                   AdvisoryBot:CIT595 .
+
+AdvisoryBot:CS580  a                   owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          10976 ;
+        AdvisoryBot:courseDescription  "Detailed study on database concept." ;
+        AdvisoryBot:courseName         "Tpcs in DataBase System" ;
+        AdvisoryBot:courseNumber       "CS 580" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Thursday , AdvisoryBot:Tuesday ;
+        AdvisoryBot:hasPrerequisite    AdvisoryBot:CS501 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT ;
+        AdvisoryBot:isElectiveFor      AdvisoryBot:CIT_SE , AdvisoryBot:CIT_CS ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Fall ;
+        AdvisoryBot:timeOffered        AdvisoryBot:4:30_5:45_pm ;
+        owl:differentFrom              AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                     AdvisoryBot:CS580 .
+
+AdvisoryBot:isPrerequisiteFor
+        a                         owl:ObjectProperty , owl:TransitiveProperty , rdf:Property , rdfs:Resource ;
+        rdfs:subPropertyOf        owl:topObjectProperty , AdvisoryBot:isPrerequisiteFor ;
+        owl:equivalentProperty    AdvisoryBot:isPrerequisiteFor ;
+        owl:inverseOf             AdvisoryBot:hasPrerequisite ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:CS565  a                 owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseName       "Introduction to Bioinfomatics" ;
+        AdvisoryBot:courseNumber     "CS 565" ;
+        AdvisoryBot:hasPrerequisite  AdvisoryBot:CS501 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:CIT_SE , AdvisoryBot:CIT_CS ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        owl:differentFrom            AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                   AdvisoryBot:CS565 .
+
+AdvisoryBot:isRecommendedPrerequisiteFor
+        a                         owl:ObjectProperty , owl:TransitiveProperty , rdf:Property , rdfs:Resource ;
+        rdfs:subPropertyOf        AdvisoryBot:isPrerequisiteFor , owl:topObjectProperty , AdvisoryBot:isRecommendedPrerequisiteFor ;
+        owl:equivalentProperty    AdvisoryBot:isRecommendedPrerequisiteFor ;
+        owl:inverseOf             AdvisoryBot:hasRecommendedPrerequisite ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:10:50_12:05_pm
+        a           owl:Thing , AdvisoryBot:Time , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:10:50_12:05_pm .
+
+AdvisoryBot:7:20_8:35_pm
+        a           owl:Thing , AdvisoryBot:Time , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:7:20_8:35_pm .
+
+AdvisoryBot:CS493  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        10979 ;
+        AdvisoryBot:courseName       "Secure Software Systems" ;
+        AdvisoryBot:courseNumber     "CS 493" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Monday , AdvisoryBot:Wednesday ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:numberCredits    3 ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Fall ;
+        AdvisoryBot:timeOffered      AdvisoryBot:10:50_12:05_pm ;
+        owl:differentFrom            AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                   AdvisoryBot:CS493 .
+
+AdvisoryBot:AD_SE  a                   owl:Thing , AdvisoryBot:Condition , owl:NamedIndividual ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:CS505 , AdvisoryBot:CS508 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS506 ;
+        AdvisoryBot:isRequiredPrerequisiteFor
+                AdvisoryBot:CS505 , AdvisoryBot:CS508 , AdvisoryBot:CS510 , AdvisoryBot:CS506 ;
+        owl:sameAs                     AdvisoryBot:AD_SE .
+
+AdvisoryBot:creditsPerSemester
+        a                         owl:DatatypeProperty ;
+        rdfs:subPropertyOf        AdvisoryBot:creditsPerSemester , owl:topDataProperty ;
+        owl:equivalentProperty    AdvisoryBot:creditsPerSemester ;
+        owl:propertyDisjointWith  owl:bottomDataProperty .
+
+AdvisoryBot:courseCRN
+        a                         owl:DatatypeProperty ;
+        rdfs:subPropertyOf        owl:topDataProperty , AdvisoryBot:courseCRN ;
+        owl:equivalentProperty    AdvisoryBot:courseCRN ;
+        owl:propertyDisjointWith  owl:bottomDataProperty .
+
+AdvisoryBot:Hybrid  a  owl:Thing , AdvisoryBot:Time , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Hybrid .
+
+AdvisoryBot:FullTime  a                 owl:Thing , AdvisoryBot:Person , AdvisoryBot:Student , owl:NamedIndividual ;
+        AdvisoryBot:creditsPerSemester  "Min 9, max 15" ;
+        owl:sameAs                      AdvisoryBot:FullTime .
+
+AdvisoryBot:Graduate  a      owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Course ;
+        owl:disjointWith     AdvisoryBot:Undergraduate , owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Graduate , _:b3 , _:b4 , _:b5 .
+
+AdvisoryBot:Sunday  a  owl:Thing , AdvisoryBot:Day , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Sunday .
+
+AdvisoryBot:isRequiredCourseFor
+        a                         owl:ObjectProperty ;
+        rdfs:domain               AdvisoryBot:Course ;
+        rdfs:range                AdvisoryBot:AcademicProgram ;
+        rdfs:subPropertyOf        owl:topObjectProperty , AdvisoryBot:isRequiredCourseFor , AdvisoryBot:isRequiredFor ;
+        owl:equivalentProperty    AdvisoryBot:isRequiredCourseFor , AdvisoryBot:isRequiredFor ;
+        owl:inverseOf             AdvisoryBot:hasRequiredCourse ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+owl:Thing  a                 owl:Class ;
+        owl:complementOf     owl:Nothing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  owl:Thing .
+
+AdvisoryBot:CS152  a                   AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          40390 ;
+        AdvisoryBot:courseName         "Computer Science II" ;
+        AdvisoryBot:courseNumber       "CS 152" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Thursday , AdvisoryBot:Tuesday ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:isRequiredCoreFor  AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:numberCredits      3 ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered        AdvisoryBot:3:05_4:20_pm ;
+        owl:differentFrom              AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                     AdvisoryBot:CS152 .
+
+AdvisoryBot:CS416  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        10971 ;
+        AdvisoryBot:courseName       "Web Programming" ;
+        AdvisoryBot:courseNumber     "CS 416" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Morning , AdvisoryBot:Wednesday ;
+        AdvisoryBot:hasPrerequisite  AdvisoryBot:CS254 ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:numberCredits    3 ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Fall ;
+        AdvisoryBot:timeOffered      AdvisoryBot:Evening ;
+        owl:differentFrom            AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                   AdvisoryBot:CS416 .
+
+AdvisoryBot:Day  a           owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , rdfs:Resource , AdvisoryBot:Day ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Day .
+
+AdvisoryBot:AcademicProgram
+        a                    owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , rdfs:Resource , AdvisoryBot:AcademicProgram ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:AcademicProgram .
+
+AdvisoryBot:Fall  a  owl:Thing , AdvisoryBot:Semester , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Fall .
+
+AdvisoryBot:ComputerScienceMinor
+        a                            owl:Thing , AdvisoryBot:AcademicProgram , AdvisoryBot:UndergraduateProgram , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:hasRequiredCore  AdvisoryBot:CS254 ;
+        owl:differentFrom            AdvisoryBot:CIT_SE , AdvisoryBot:CIT_CS ;
+        owl:sameAs                   AdvisoryBot:ComputerScienceMinor .
+
+AdvisoryBot:CS510  a                   owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          43172 ;
+        AdvisoryBot:courseName         "Fund of Software Engineering" ;
+        AdvisoryBot:courseNumber       "CS 510" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Monday , AdvisoryBot:Wednesday ;
+        AdvisoryBot:hasPrerequisite    AdvisoryBot:CS501 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT , AdvisoryBot:AD_SE ;
+        AdvisoryBot:hasRequiredPrerequisite
+                AdvisoryBot:AD_SE ;
+        AdvisoryBot:isElectiveFor      AdvisoryBot:CIT_CS ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:CS530 ;
+        AdvisoryBot:isRequiredCoreFor  AdvisoryBot:CIT_SE ;
+        AdvisoryBot:numberCredits      3 ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Fall ;
+        AdvisoryBot:timeOffered        AdvisoryBot:4:30_5:45_pm ;
+        owl:differentFrom              AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                     AdvisoryBot:CS510 .
+
+AdvisoryBot:CS498  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        40435 ;
+        AdvisoryBot:courseName       "Senior Project" ;
+        AdvisoryBot:courseNumber     "CS 498" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Monday ;
+        AdvisoryBot:hasPrerequisite  AdvisoryBot:CS151 , AdvisoryBot:CS253 ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:numberCredits    3 ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered      AdvisoryBot:1:40_2:55_pm ;
+        owl:differentFrom            AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                   AdvisoryBot:CS498 .
+
+AdvisoryBot:CS385  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        10961 ;
+        AdvisoryBot:courseName       "Computer Architecture" ;
+        AdvisoryBot:courseNumber     "CS 385" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Thursday , AdvisoryBot:Tuesday ;
+        AdvisoryBot:hasPrerequisite  AdvisoryBot:CS254 ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:numberCredits    3 ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Fall ;
+        AdvisoryBot:timeOffered      AdvisoryBot:3:05_4:20_pm ;
+        owl:differentFrom            AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                   AdvisoryBot:CS385 .
+
+AdvisoryBot:CybersecurityConcentration
+        a                  owl:Thing , AdvisoryBot:AcademicProgram , AdvisoryBot:UndergraduateProgram , owl:NamedIndividual , rdfs:Resource ;
+        owl:differentFrom  AdvisoryBot:CIT_SE , AdvisoryBot:CIT_CS ;
+        owl:sameAs         AdvisoryBot:CybersecurityConcentration .
+
+AdvisoryBot:timeOffered
+        a                         owl:ObjectProperty , rdf:Property , rdfs:Resource ;
+        rdfs:domain               AdvisoryBot:Course ;
+        rdfs:range                AdvisoryBot:Time ;
+        rdfs:subPropertyOf        owl:topObjectProperty , AdvisoryBot:timeOffered ;
+        owl:equivalentProperty    AdvisoryBot:timeOffered ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:CS410  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        10969 ;
+        AdvisoryBot:courseName       "Software Engineering" ;
+        AdvisoryBot:courseNumber     "CS 410" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Thursday , AdvisoryBot:Tuesday ;
+        AdvisoryBot:hasPrerequisite  AdvisoryBot:CS151 , AdvisoryBot:CS253 ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:numberCredits    3 ;
+        AdvisoryBot:timeOffered      AdvisoryBot:1:40_2:55_pm ;
+        owl:differentFrom            AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                   AdvisoryBot:CS410 .
+
+AdvisoryBot:CS508  a                    owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN           40416 ;
+        AdvisoryBot:courseDescription   "Study on shared software system among multiple computers and how they communicate and coordinate actions in order to appear as a single coherent systm." ;
+        AdvisoryBot:courseName          "Distributed Computing" ;
+        AdvisoryBot:courseNumber        "CS 508" ;
+        AdvisoryBot:creditsPerSemester  3 ;
+        AdvisoryBot:daysOffered         AdvisoryBot:Monday , AdvisoryBot:Wednesday ;
+        AdvisoryBot:hasPrerequisite     AdvisoryBot:CS501 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT , AdvisoryBot:AD_SE ;
+        AdvisoryBot:hasRequiredPrerequisite
+                AdvisoryBot:AD_SE ;
+        AdvisoryBot:isElectiveFor       AdvisoryBot:CIT_CS ;
+        AdvisoryBot:isOfferedBy         AdvisoryBot:CS ;
+        AdvisoryBot:isRequiredCourseFor
+                AdvisoryBot:CIT_SE ;
+        AdvisoryBot:isRequiredFor       AdvisoryBot:CIT_SE ;
+        AdvisoryBot:semesterOffered     AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered         AdvisoryBot:4:30_5:45_pm ;
+        owl:differentFrom               AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                      AdvisoryBot:CS508 .
+
+AdvisoryBot:isRequiredCoreFor
+        a                         owl:ObjectProperty ;
+        rdfs:domain               AdvisoryBot:Course ;
+        rdfs:range                AdvisoryBot:AcademicProgram ;
+        rdfs:subPropertyOf        owl:topObjectProperty , AdvisoryBot:isRequiredCoreFor ;
+        owl:equivalentProperty    AdvisoryBot:isRequiredCoreFor ;
+        owl:inverseOf             AdvisoryBot:hasRequiredCore ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:CS492  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        40433 ;
+        AdvisoryBot:courseName       "Computer Security" ;
+        AdvisoryBot:courseNumber     "CS 492" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Thursday , AdvisoryBot:Tuesday ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:numberCredits    3 ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered      AdvisoryBot:12:15_1:30_pm ;
+        owl:differentFrom            AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                   AdvisoryBot:CS492 .
+
+AdvisoryBot:CS464  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        10977 ;
+        AdvisoryBot:courseName       "Programming Language" ;
+        AdvisoryBot:courseNumber     "CS 464" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Monday , AdvisoryBot:Wednesday ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:numberCredits    3 ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered      AdvisoryBot:10:50_12:05_pm ;
+        owl:differentFrom            AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                   AdvisoryBot:CS464 .
+
+owl:topObjectProperty
+        a                         owl:ObjectProperty , owl:TransitiveProperty , owl:SymmetricProperty , owl:ReflexiveProperty ;
+        rdfs:subPropertyOf        owl:topObjectProperty ;
+        owl:equivalentProperty    owl:topObjectProperty ;
+        owl:inverseOf             owl:topObjectProperty ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+owl:topDataProperty  a            owl:DatatypeProperty ;
+        rdfs:subPropertyOf        owl:topDataProperty ;
+        owl:equivalentProperty    owl:topDataProperty ;
+        owl:propertyDisjointWith  owl:bottomDataProperty .
+
+AdvisoryBot:CS530  a                   owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          13387 ;
+        AdvisoryBot:courseDescription  "Advanced topics in software engineering" ;
+        AdvisoryBot:courseName         "Advanced Software Engineering" ;
+        AdvisoryBot:courseNumber       "CS 530" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Monday , AdvisoryBot:Wednesday ;
+        AdvisoryBot:hasPrerequisite    AdvisoryBot:CS501 , AdvisoryBot:CS510 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT , AdvisoryBot:AD_SE ;
+        AdvisoryBot:isElectiveFor      AdvisoryBot:CIT_CS ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:isRequiredCourseFor
+                AdvisoryBot:CIT_SE ;
+        AdvisoryBot:isRequiredFor      AdvisoryBot:CIT_SE ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Fall ;
+        AdvisoryBot:timeOffered        AdvisoryBot:3:05_4:20_pm ;
+        owl:differentFrom              AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                     AdvisoryBot:CS530 .
+
+AdvisoryBot:12:15_1:30_pm
+        a           owl:Thing , AdvisoryBot:Time , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:12:15_1:30_pm .
+
+AdvisoryBot:CS502  a                   owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          13381 ;
+        AdvisoryBot:courseDescription  "Comprehensive coverage of the concepts of computer networking, and computer architecture and organization required to enable students to understand and efficiently utilize computing and communication resources. Development of distributed computer applications." ;
+        AdvisoryBot:courseNumber       "CS 502" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Thursday , AdvisoryBot:Tuesday ;
+        AdvisoryBot:hasPrerequisite    AdvisoryBot:CS500 , AdvisoryBot:AD_CIT ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:CIT_SE , AdvisoryBot:CIT595 ;
+        AdvisoryBot:isRequiredCoreFor  AdvisoryBot:CIT_CS ;
+        AdvisoryBot:isRequiredPrerequisiteFor
+                AdvisoryBot:CIT595 ;
+        AdvisoryBot:programName        "Computing and Communications Technologies" ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Fall ;
+        AdvisoryBot:timeOffered        AdvisoryBot:Evening ;
+        owl:differentFrom              AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                     AdvisoryBot:CS502 .
+
+AdvisoryBot:programName
+        a                         owl:DatatypeProperty ;
+        rdfs:subPropertyOf        AdvisoryBot:programName , owl:topDataProperty ;
+        owl:equivalentProperty    AdvisoryBot:programName ;
+        owl:propertyDisjointWith  owl:bottomDataProperty .
+
+AdvisoryBot:Morning  a  owl:Thing , AdvisoryBot:Time , AdvisoryBot:Day , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Morning .
+
+AdvisoryBot:Core_Completed
+        a           owl:Thing , AdvisoryBot:Condition , owl:NamedIndividual ;
+        owl:sameAs  AdvisoryBot:Core_Completed .
+
+AdvisoryBot:CS151  a                   AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          40387 ;
+        AdvisoryBot:courseName         "Computer Science 1" ;
+        AdvisoryBot:courseNumber       "CS 151" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Monday , AdvisoryBot:Wednesday ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:CS463 , AdvisoryBot:CS253 , AdvisoryBot:CS498 , AdvisoryBot:CS291 , AdvisoryBot:CS460 , AdvisoryBot:CS410 ;
+        AdvisoryBot:isRequiredCoreFor  AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:numberCredits      3 ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered        AdvisoryBot:10:50_12:05_pm ;
+        owl:differentFrom              AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                     AdvisoryBot:CS151 .
+
+AdvisoryBot:Summer  a  owl:Thing , AdvisoryBot:Semester , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Summer .
+
+AdvisoryBot:Semester  a      owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , rdfs:Resource , AdvisoryBot:Semester ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Semester .
+
+AdvisoryBot:ComputerScienceAlternative
+        a                  owl:Thing , AdvisoryBot:AcademicProgram , AdvisoryBot:UndergraduateProgram , owl:NamedIndividual , rdfs:Resource ;
+        owl:differentFrom  AdvisoryBot:CIT_SE , AdvisoryBot:CIT_CS ;
+        owl:sameAs         AdvisoryBot:ComputerScienceAlternative .
+
+AdvisoryBot:CS550  a                 owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        10967 ;
+        AdvisoryBot:courseName       "Usable Security & Privacy" ;
+        AdvisoryBot:courseNumber     "CS 550" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Monday , AdvisoryBot:Wednesday ;
+        AdvisoryBot:hasPrerequisite  AdvisoryBot:CS501 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:CIT_CS , AdvisoryBot:CIT_SE ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Fall ;
+        AdvisoryBot:timeOffered      AdvisoryBot:4:30_5:45_pm ;
+        owl:differentFrom            AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                   AdvisoryBot:CS550 .
+
+AdvisoryBot:Time  a          owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , rdfs:Resource , AdvisoryBot:Time ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Time .
+
+owl:bottomObjectProperty
+        a                         owl:ObjectProperty , owl:SymmetricProperty , owl:AsymmetricProperty , owl:IrreflexiveProperty ;
+        rdfs:domain               AdvisoryBot:Course , AdvisoryBot:Semester , AdvisoryBot:Time , AdvisoryBot:Department , AdvisoryBot:AcademicProgram , AdvisoryBot:Day ;
+        rdfs:range                AdvisoryBot:Course , AdvisoryBot:Time , AdvisoryBot:Semester , AdvisoryBot:Department , AdvisoryBot:AcademicProgram , AdvisoryBot:Day ;
+        rdfs:subPropertyOf        AdvisoryBot:daysOffered , AdvisoryBot:hasPrerequisite , owl:bottomObjectProperty , AdvisoryBot:timeOffered , AdvisoryBot:isOfferedBy , AdvisoryBot:isRequiredPrerequisiteFor , AdvisoryBot:isRecommendedPrerequisiteFor , AdvisoryBot:hasRequiredCore , AdvisoryBot:hasRequiredPrerequisite , AdvisoryBot:isRequiredCourseFor , AdvisoryBot:isRequiredFor , AdvisoryBot:hasRequiredCourse , AdvisoryBot:hasElective , AdvisoryBot:isPrerequisiteFor , AdvisoryBot:semesterOffered , AdvisoryBot:hasRecommendedPrerequisite , AdvisoryBot:isElectiveFor , owl:topObjectProperty , AdvisoryBot:isRequiredCoreFor , AdvisoryBot:offers ;
+        owl:equivalentProperty    owl:bottomObjectProperty ;
+        owl:inverseOf             owl:bottomObjectProperty ;
+        owl:propertyDisjointWith  AdvisoryBot:daysOffered , AdvisoryBot:hasPrerequisite , owl:bottomObjectProperty , AdvisoryBot:timeOffered , AdvisoryBot:isOfferedBy , AdvisoryBot:isRequiredPrerequisiteFor , AdvisoryBot:isRecommendedPrerequisiteFor , AdvisoryBot:hasRequiredCore , AdvisoryBot:hasRequiredPrerequisite , AdvisoryBot:isRequiredCourseFor , AdvisoryBot:isRequiredFor , AdvisoryBot:hasRequiredCourse , AdvisoryBot:hasElective , AdvisoryBot:isPrerequisiteFor , AdvisoryBot:semesterOffered , AdvisoryBot:hasRecommendedPrerequisite , AdvisoryBot:isElectiveFor , owl:topObjectProperty , AdvisoryBot:isRequiredCoreFor , AdvisoryBot:offers .
+
+AdvisoryBot:offers  a             owl:ObjectProperty , rdf:Property , rdfs:Resource ;
+        rdfs:domain               AdvisoryBot:Department ;
+        rdfs:range                AdvisoryBot:Course ;
+        rdfs:subPropertyOf        owl:topObjectProperty , AdvisoryBot:offers ;
+        owl:equivalentProperty    AdvisoryBot:offers ;
+        owl:inverseOf             AdvisoryBot:isOfferedBy ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:hasElective
+        a                         owl:ObjectProperty , rdf:Property , rdfs:Resource ;
+        rdfs:domain               AdvisoryBot:AcademicProgram ;
+        rdfs:range                AdvisoryBot:Course ;
+        rdfs:subPropertyOf        owl:topObjectProperty , AdvisoryBot:hasElective ;
+        owl:equivalentProperty    AdvisoryBot:hasElective ;
+        owl:inverseOf             AdvisoryBot:isElectiveFor ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:programDescription
+        a                         owl:DatatypeProperty ;
+        rdfs:subPropertyOf        owl:topDataProperty , AdvisoryBot:programDescription ;
+        owl:equivalentProperty    AdvisoryBot:programDescription ;
+        owl:propertyDisjointWith  owl:bottomDataProperty .
+
+AdvisoryBot:Thursday  a  owl:Thing , AdvisoryBot:Day , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Thursday .
+
+AdvisoryBot:CS463  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        40431 ;
+        AdvisoryBot:courseName       "Algorithms" ;
+        AdvisoryBot:courseNumber     "CS 463" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Wednesday ;
+        AdvisoryBot:hasPrerequisite  AdvisoryBot:CS151 , AdvisoryBot:CS253 ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:numberCredits    3 ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered      AdvisoryBot:12:15_1:30_pm ;
+        owl:differentFrom            AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                   AdvisoryBot:CS463 .
+
+AdvisoryBot:Online  a  owl:Thing , AdvisoryBot:Time , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Online .
+
+AdvisoryBot:CS407  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        10964 ;
+        AdvisoryBot:courseName       "Advanced Algorithms" ;
+        AdvisoryBot:courseNumber     "CS 407" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Monday ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:numberCredits    3 ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Fall ;
+        AdvisoryBot:timeOffered      AdvisoryBot:5:55_7:10_pm ;
+        owl:differentFrom            AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                   AdvisoryBot:CS407 .
+
+AdvisoryBot:Condition
+        a                    owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Condition .
+
+AdvisoryBot:Min_18_Credits
+        a                              owl:Thing , AdvisoryBot:Condition , owl:NamedIndividual ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:CIT595 ;
+        AdvisoryBot:isRequiredPrerequisiteFor
+                AdvisoryBot:CIT595 ;
+        owl:sameAs                     AdvisoryBot:Min_18_Credits .
+
+AdvisoryBot:8:45_10_pm
+        a           owl:Thing , AdvisoryBot:Time , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:8:45_10_pm .
+
+AdvisoryBot:CS501  a                   owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          13380 ;
+        AdvisoryBot:courseDescription  "Software design for structuring and manipulating data. Topics include stacks, queues, hash tables, trees, graphs, advanced sorting, and analysis of algorithms." ;
+        AdvisoryBot:courseName         "Foundations of Computer Science" ;
+        AdvisoryBot:courseNumber       "CS 501" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Monday , AdvisoryBot:Wednesday ;
+        AdvisoryBot:hasPrerequisite    AdvisoryBot:CS500 , AdvisoryBot:AD_CIT ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:CS560 , AdvisoryBot:CS575 , AdvisoryBot:CS525 , AdvisoryBot:CS508 , AdvisoryBot:CS570 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        AdvisoryBot:isRequiredCoreFor  AdvisoryBot:CIT_CS , AdvisoryBot:CIT_SE ;
+        AdvisoryBot:isRequiredPrerequisiteFor
+                AdvisoryBot:CIT595 ;
+        AdvisoryBot:numberCredits      3 ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Fall , AdvisoryBot:Summer ;
+        AdvisoryBot:timeOffered        AdvisoryBot:Evening ;
+        owl:differentFrom              AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                     AdvisoryBot:CS501 .
+
+AdvisoryBot:CS570  a                 owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        "Theory and development of Computer Systems to perform tasks that normally require human Intelligence." , 40430 ;
+        AdvisoryBot:courseName       "Tpcs in Artificial Intelligance" ;
+        AdvisoryBot:courseNumber     "CS 570" ;
+        AdvisoryBot:hasPrerequisite  AdvisoryBot:CS501 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:CIT_CS , AdvisoryBot:CIT_SE ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Spring ;
+        owl:differentFrom            AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                   AdvisoryBot:CS570 .
+
+AdvisoryBot:MATH217  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:ComputerScienceHonors_BS ;
+        owl:differentFrom              AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                     AdvisoryBot:MATH217 .
+
+AdvisoryBot:CEGT  a         owl:Thing , AdvisoryBot:Department , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:offers  AdvisoryBot:CET501 ;
+        owl:sameAs          AdvisoryBot:CEGT .
+
+AdvisoryBot:CS291  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        40401 ;
+        AdvisoryBot:courseName       "Intro to Computer Forensics" ;
+        AdvisoryBot:courseNumber     "CS 291" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Monday , AdvisoryBot:Wednesday ;
+        AdvisoryBot:hasPrerequisite  AdvisoryBot:CS151 ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:numberCredits    3 ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered      AdvisoryBot:Evening ;
+        owl:differentFrom            AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                   AdvisoryBot:CS291 .
+
+AdvisoryBot:isOfferedBy
+        a                         owl:ObjectProperty , rdf:Property , rdfs:Resource ;
+        rdfs:domain               AdvisoryBot:Course ;
+        rdfs:range                AdvisoryBot:Department ;
+        rdfs:subPropertyOf        owl:topObjectProperty , AdvisoryBot:isOfferedBy ;
+        owl:equivalentProperty    AdvisoryBot:isOfferedBy ;
+        owl:inverseOf             AdvisoryBot:offers ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:Wednesday
+        a           owl:Thing , AdvisoryBot:Day , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Wednesday .
+
+AdvisoryBot:AD_CIT  a                  owl:Thing , AdvisoryBot:Condition , owl:NamedIndividual ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CIT_SE , AdvisoryBot:CS502 , AdvisoryBot:CS525 , AdvisoryBot:CS508 , AdvisoryBot:CS570 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        AdvisoryBot:isRecommendedPrerequisiteFor
+                AdvisoryBot:CS500 ;
+        owl:sameAs                     AdvisoryBot:AD_CIT .
+
+AdvisoryBot:CS455  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN        43173 ;
+        AdvisoryBot:courseName       "Secure Software Development" ;
+        AdvisoryBot:courseNumber     "CS 455" ;
+        AdvisoryBot:daysOffered      AdvisoryBot:Monday ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:numberCredits    3 ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered      AdvisoryBot:10:50_12:05_pm ;
+        owl:differentFrom            AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                   AdvisoryBot:CS455 .
+
+AdvisoryBot:Friday  a  owl:Thing , AdvisoryBot:Day , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Friday .
+
+AdvisoryBot:CS590  a                 owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseName       "Topics in High Prerformance computing" ;
+        AdvisoryBot:courseNumber     "CS 590" ;
+        AdvisoryBot:hasPrerequisite  AdvisoryBot:CS501 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT ;
+        AdvisoryBot:isElectiveFor    AdvisoryBot:CIT_SE , AdvisoryBot:CIT_CS ;
+        AdvisoryBot:isOfferedBy      AdvisoryBot:CS ;
+        AdvisoryBot:semesterOffered  AdvisoryBot:Spring ;
+        owl:differentFrom            AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                   AdvisoryBot:CS590 .
+
+AdvisoryBot:CS355  a                   AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          40405 ;
+        AdvisoryBot:courseName         "Systems Programming" ;
+        AdvisoryBot:courseNumber       "CS 355" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Thursday ;
+        AdvisoryBot:hasPrerequisite    AdvisoryBot:CS254 ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:isRequiredCoreFor  AdvisoryBot:ComputerScienceHonors_BS ;
+        AdvisoryBot:numberCredits      3 ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered        AdvisoryBot:9:25_10:40_am , AdvisoryBot:Tuesday ;
+        owl:differentFrom              AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                     AdvisoryBot:CS355 .
+
+AdvisoryBot:hasRecommendedPrerequisite
+        a                         owl:ObjectProperty , owl:TransitiveProperty , rdf:Property , rdfs:Resource ;
+        rdfs:comment              "Recommended course or condition for a course to be taken." ;
+        rdfs:subPropertyOf        AdvisoryBot:hasRecommendedPrerequisite , AdvisoryBot:hasPrerequisite , owl:topObjectProperty ;
+        owl:equivalentProperty    AdvisoryBot:hasRecommendedPrerequisite ;
+        owl:inverseOf             AdvisoryBot:isRecommendedPrerequisiteFor ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:CS506  a                   owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          40428 ;
+        AdvisoryBot:courseDescription  "Detailed study on purpose of identifying any errors, gaps or missing requirements and rectifying it." ;
+        AdvisoryBot:courseName         "Software Testing & Quality Assur" ;
+        AdvisoryBot:courseNumber       "CS 506" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Thursday , AdvisoryBot:Tuesday ;
+        AdvisoryBot:hasPrerequisite    AdvisoryBot:CS501 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT , AdvisoryBot:AD_SE ;
+        AdvisoryBot:hasRequiredPrerequisite
+                AdvisoryBot:AD_SE ;
+        AdvisoryBot:isElectiveFor      AdvisoryBot:CIT_CS ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:isRequiredCourseFor
+                AdvisoryBot:CIT_SE ;
+        AdvisoryBot:isRequiredFor      AdvisoryBot:CIT_SE ;
+        AdvisoryBot:numberCredits      3 ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered        AdvisoryBot:4:30_5:45_pm ;
+        owl:differentFrom              AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                     AdvisoryBot:CS506 .
+
+AdvisoryBot:Afternoon
+        a           owl:Thing , AdvisoryBot:Time , owl:NamedIndividual , rdfs:Resource ;
+        owl:sameAs  AdvisoryBot:Afternoon .
+
+AdvisoryBot:MATH152  a                 AdvisoryBot:Undergraduate , owl:Thing , AdvisoryBot:Course , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:isPrerequisiteFor  AdvisoryBot:ComputerScienceHonors_BS ;
+        owl:differentFrom              AdvisoryBot:CS560 , AdvisoryBot:CS501 , AdvisoryBot:CS575 , AdvisoryBot:CS595 , AdvisoryBot:CS502 , AdvisoryBot:CS508 , AdvisoryBot:CS525 , AdvisoryBot:CS570 , AdvisoryBot:CET501 , AdvisoryBot:CS506 , AdvisoryBot:CS590 , AdvisoryBot:CS505 , AdvisoryBot:CS565 , AdvisoryBot:CS510 , AdvisoryBot:CS530 , AdvisoryBot:CS500 , AdvisoryBot:CIT595 , AdvisoryBot:CS580 , AdvisoryBot:CS550 ;
+        owl:sameAs                     AdvisoryBot:MATH152 .
+
+AdvisoryBot:CS575  a                   owl:Thing , AdvisoryBot:Course , AdvisoryBot:Graduate , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:courseCRN          40421 ;
+        AdvisoryBot:courseDescription  "Different approach to regular Web application where data can be easily understood by the machine and provide more applicable resources to the users." ;
+        AdvisoryBot:courseName         "Linked Data Engineering" ;
+        AdvisoryBot:courseNumber       "CS 575" ;
+        AdvisoryBot:daysOffered        AdvisoryBot:Monday ;
+        AdvisoryBot:hasPrerequisite    AdvisoryBot:CS501 , AdvisoryBot:CS500 , AdvisoryBot:AD_CIT ;
+        AdvisoryBot:isElectiveFor      AdvisoryBot:CIT_CS , AdvisoryBot:CIT_SE ;
+        AdvisoryBot:isOfferedBy        AdvisoryBot:CS ;
+        AdvisoryBot:semesterOffered    AdvisoryBot:Spring ;
+        AdvisoryBot:timeOffered        AdvisoryBot:1:40_2:55_pm ;
+        owl:differentFrom              AdvisoryBot:CS463 , AdvisoryBot:MATH217 , AdvisoryBot:CS151 , AdvisoryBot:CS385 , AdvisoryBot:MATH152 , AdvisoryBot:CS455 , AdvisoryBot:CS152 , AdvisoryBot:CS498 , AdvisoryBot:CS464 , AdvisoryBot:CS354 , AdvisoryBot:CS494 , AdvisoryBot:CS407 , AdvisoryBot:CS492 , AdvisoryBot:CS254 , AdvisoryBot:CS410 , AdvisoryBot:CS481 , AdvisoryBot:CS493 , AdvisoryBot:CS253 , AdvisoryBot:CS291 , AdvisoryBot:CS416 , AdvisoryBot:CS355 , AdvisoryBot:CS460 ;
+        owl:sameAs                     AdvisoryBot:CS575 .
+
+AdvisoryBot:hasRequiredPrerequisite
+        a                         owl:ObjectProperty , owl:TransitiveProperty , rdf:Property , rdfs:Resource ;
+        rdfs:subPropertyOf        AdvisoryBot:hasPrerequisite , owl:topObjectProperty , AdvisoryBot:hasRequiredPrerequisite ;
+        owl:equivalentProperty    AdvisoryBot:hasRequiredPrerequisite ;
+        owl:inverseOf             AdvisoryBot:isRequiredPrerequisiteFor ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+rdf:rest  a                 rdf:Property , rdfs:Resource ;
+        rdfs:domain         rdf:List ;
+        rdfs:range          rdf:List ;
+        rdfs:subPropertyOf  rdf:rest .
+
+rdf:List  a              rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Resource .
+
+rdf:predicate  a            rdf:Property , rdfs:Resource ;
+        rdfs:domain         rdf:Statement ;
+        rdfs:subPropertyOf  rdf:predicate .
+
+rdf:Property  a          rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Resource , rdf:Property .
+
+rdfs:label  a       owl:AnnotationProperty , rdf:Property , rdfs:Resource ;
+        rdfs:range  rdfs:Literal .
+
+rdf:subject  a              rdf:Property , rdfs:Resource ;
+        rdfs:domain         rdf:Statement ;
+        rdfs:subPropertyOf  rdf:subject .
+
+rdfs:Resource  a         rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Resource .
+
+rdf:type  a         rdf:Property , rdfs:Resource ;
+        rdfs:range  rdfs:Class .
+
+rdfs:Class  a            rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Resource , rdfs:Class .
+
+rdf:Statement  a         rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Resource .
+
+rdf:XMLLiteral  a  rdfs:Datatype , rdfs:Class , rdfs:Resource .
+
+rdfs:comment  a     owl:AnnotationProperty , rdf:Property , rdfs:Resource ;
+        rdfs:range  rdfs:Literal .
+
+rdfs:range  a        rdf:Property , rdfs:Resource ;
+        rdfs:domain  rdf:Property ;
+        rdfs:range   rdfs:Class .
+
+rdfs:subPropertyOf  a  rdf:Property , rdfs:Resource ;
+        rdfs:domain  rdf:Property ;
+        rdfs:range   rdf:Property .
+
+rdf:object  a               rdf:Property , rdfs:Resource ;
+        rdfs:domain         rdf:Statement ;
+        rdfs:subPropertyOf  rdf:object .
+
+rdf:nil  a      rdf:List , rdfs:Resource .
+
+rdfs:domain  a       rdf:Property , rdfs:Resource ;
+        rdfs:domain  rdf:Property ;
+        rdfs:range   rdfs:Class .
+
+rdfs:Literal  a          rdfs:Datatype , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Resource .
+
+rdf:first  a                rdf:Property , rdfs:Resource ;
+        rdfs:domain         rdf:List ;
+        rdfs:subPropertyOf  rdf:first .
+
+rdfs:subClassOf  a   rdf:Property , rdfs:Resource ;
+        rdfs:domain  rdfs:Class ;
+        rdfs:range   rdfs:Class .
+
+_:b6    a                 owl:Class ;
+        rdfs:subClassOf   owl:Thing ;
+        owl:complementOf  AdvisoryBot:Graduate ;
+        owl:disjointWith  AdvisoryBot:Graduate , owl:Nothing .
+
+_:b7    a                   owl:Class , owl:Restriction ;
+        rdfs:subClassOf     owl:Thing , AdvisoryBot:Course ;
+        owl:disjointWith    owl:Nothing ;
+        owl:onProperty      AdvisoryBot:isElectiveFor ;
+        owl:someValuesFrom  AdvisoryBot:GraduateProgram .
+
+_:b3    a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Course ;
+        owl:disjointWith     AdvisoryBot:Undergraduate , owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Graduate ;
+        owl:intersectionOf   [ a          rdf:List , rdfs:Resource ;
+                               rdf:first  AdvisoryBot:Course ;
+                               rdf:rest   [ a          rdf:List , rdfs:Resource ;
+                                            rdf:first  _:b7 ;
+                                            rdf:rest   [ a          rdf:List , rdfs:Resource ;
+                                                         rdf:first  _:b8 ;
+                                                         rdf:rest   ()
+                                                       ]
+                                          ]
+                             ] .
+
+_:b4    a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Course ;
+        owl:disjointWith     AdvisoryBot:Undergraduate , owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Graduate ;
+        owl:intersectionOf   [ a          rdf:List , rdfs:Resource ;
+                               rdf:first  AdvisoryBot:Course ;
+                               rdf:rest   [ a          rdf:List , rdfs:Resource ;
+                                            rdf:first  _:b9 ;
+                                            rdf:rest   [ a          rdf:List , rdfs:Resource ;
+                                                         rdf:first  _:b10 ;
+                                                         rdf:rest   ()
+                                                       ]
+                                          ]
+                             ] .
+
+_:b11   a                 owl:Class ;
+        rdfs:subClassOf   owl:Thing ;
+        owl:complementOf  AdvisoryBot:Graduate ;
+        owl:disjointWith  AdvisoryBot:Graduate , owl:Nothing .
+
+_:b2    a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Course ;
+        owl:disjointWith     AdvisoryBot:Graduate , owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Undergraduate ;
+        owl:intersectionOf   [ a          rdf:List , rdfs:Resource ;
+                               rdf:first  AdvisoryBot:Course ;
+                               rdf:rest   [ a          rdf:List , rdfs:Resource ;
+                                            rdf:first  _:b11 ;
+                                            rdf:rest   ()
+                                          ]
+                             ] .
+
+_:b12   a                 owl:Class ;
+        rdfs:subClassOf   owl:Thing ;
+        owl:complementOf  AdvisoryBot:Graduate ;
+        owl:disjointWith  AdvisoryBot:Graduate , owl:Nothing .
+
+_:b13   a                   owl:Class , owl:Restriction ;
+        rdfs:subClassOf     owl:Thing , AdvisoryBot:Course ;
+        owl:disjointWith    owl:Nothing ;
+        owl:onProperty      AdvisoryBot:isRequiredFor ;
+        owl:someValuesFrom  AdvisoryBot:GraduateProgram .
+
+_:b5    a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Course ;
+        owl:disjointWith     AdvisoryBot:Undergraduate , owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Graduate ;
+        owl:intersectionOf   [ a          rdf:List , rdfs:Resource ;
+                               rdf:first  AdvisoryBot:Course ;
+                               rdf:rest   [ a          rdf:List , rdfs:Resource ;
+                                            rdf:first  _:b14 ;
+                                            rdf:rest   [ a          rdf:List , rdfs:Resource ;
+                                                         rdf:first  _:b13 ;
+                                                         rdf:rest   ()
+                                                       ]
+                                          ]
+                             ] .
+
+_:b8    a                   owl:Class , owl:Restriction ;
+        rdfs:subClassOf     owl:Thing , AdvisoryBot:Course ;
+        owl:disjointWith    owl:Nothing ;
+        owl:onProperty      AdvisoryBot:isRequiredFor ;
+        owl:someValuesFrom  AdvisoryBot:GraduateProgram .
+
+_:b0    a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Course ;
+        owl:disjointWith     AdvisoryBot:Graduate , owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Undergraduate ;
+        owl:intersectionOf   [ a          rdf:List , rdfs:Resource ;
+                               rdf:first  AdvisoryBot:Course ;
+                               rdf:rest   [ a          rdf:List , rdfs:Resource ;
+                                            rdf:first  _:b6 ;
+                                            rdf:rest   ()
+                                          ]
+                             ] .
+
+_:b14   a                   owl:Class , owl:Restriction ;
+        rdfs:subClassOf     owl:Thing , AdvisoryBot:Course ;
+        owl:disjointWith    owl:Nothing ;
+        owl:onProperty      AdvisoryBot:isElectiveFor ;
+        owl:someValuesFrom  AdvisoryBot:GraduateProgram .
+
+_:b1    a                    owl:Class ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Course ;
+        owl:disjointWith     AdvisoryBot:Graduate , owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Undergraduate ;
+        owl:intersectionOf   [ a          rdf:List , rdfs:Resource ;
+                               rdf:first  AdvisoryBot:Course ;
+                               rdf:rest   [ a          rdf:List , rdfs:Resource ;
+                                            rdf:first  _:b12 ;
+                                            rdf:rest   ()
+                                          ]
+                             ] .
+
+<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl>
+        a       owl:Ontology .
+
+_:b10   a                   owl:Class , owl:Restriction ;
+        rdfs:subClassOf     owl:Thing , AdvisoryBot:Course ;
+        owl:disjointWith    owl:Nothing ;
+        owl:onProperty      AdvisoryBot:isRequiredFor ;
+        owl:someValuesFrom  AdvisoryBot:GraduateProgram .
+
+_:b9    a                   owl:Class , owl:Restriction ;
+        rdfs:subClassOf     owl:Thing , AdvisoryBot:Course ;
+        owl:disjointWith    owl:Nothing ;
+        owl:onProperty      AdvisoryBot:isElectiveFor ;
+        owl:someValuesFrom  AdvisoryBot:GraduateProgram .
+
+rdfs:Container  a        rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Container .
+
+rdfs:ContainerMembershipProperty
+        a                rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:ContainerMembershipProperty , rdf:Property .
+
+rdf:Bag  a               rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdf:Bag , rdfs:Container .
+
+rdf:Seq  a               rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdf:Seq , rdfs:Container .
+
+rdfs:Datatype  a         rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Datatype , rdfs:Class .
+
+rdf:Alt  a               rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdf:Alt , rdfs:Container .
+
+rdfs:isDefinedBy  a         owl:AnnotationProperty , rdf:Property , rdfs:Resource ;
+        rdfs:subPropertyOf  rdfs:isDefinedBy , rdfs:seeAlso .
+
+rdfs:seeAlso  a             owl:AnnotationProperty , rdf:Property , rdfs:Resource ;
+        rdfs:subPropertyOf  rdfs:seeAlso .
+
+owl:DatatypeProperty  a  rdfs:Class , rdfs:Resource .
+
+owl:Class  a    rdfs:Class , rdfs:Resource .
+
+owl:NamedIndividual  a  rdfs:Class , rdfs:Resource .
+
+owl:Restriction  a  rdfs:Class , rdfs:Resource .
+
+owl:TransitiveProperty
+        a       rdfs:Class , rdfs:Resource .
+
+owl:ObjectProperty  a  rdfs:Class , rdfs:Resource .
+
+owl:Ontology  a  rdfs:Class , rdfs:Resource .

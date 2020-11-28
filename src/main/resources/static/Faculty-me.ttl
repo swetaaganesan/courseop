@@ -1,248 +1,424 @@
-@prefix : <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix :      <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#> .
 @prefix AdvisoryBot: <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#> .
-@base <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl> .
-
-<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl> rdf:type owl:Ontology .
-
-#################################################################
-#    Object Properties
-#################################################################
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#isTaughtBy
-AdvisoryBot:isTaughtBy rdf:type owl:ObjectProperty ;
-                       owl:inverseOf AdvisoryBot:teaches .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#teaches
-AdvisoryBot:teaches rdf:type owl:ObjectProperty .
-
-
-#################################################################
-#    Data properties
-#################################################################
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#email
-AdvisoryBot:email rdf:type owl:DatatypeProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#firstName
-AdvisoryBot:firstName rdf:type owl:DatatypeProperty ;
-                      rdfs:subPropertyOf owl:topDataProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#lastName
-AdvisoryBot:lastName rdf:type owl:DatatypeProperty ;
-                     rdfs:subPropertyOf owl:topDataProperty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#website
-AdvisoryBot:website rdf:type owl:DatatypeProperty .
-
-
-#################################################################
-#    Classes
-#################################################################
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Adjunct
-AdvisoryBot:Adjunct rdf:type owl:Class ;
-                    rdfs:subClassOf AdvisoryBot:Faculty ;
-                    owl:disjointWith AdvisoryBot:Permanent .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Faculty
-AdvisoryBot:Faculty rdf:type owl:Class ;
-                    owl:disjointWith AdvisoryBot:Staff .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Permanent
-AdvisoryBot:Permanent rdf:type owl:Class ;
-                      rdfs:subClassOf AdvisoryBot:Faculty .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Secretary
-AdvisoryBot:Secretary rdf:type owl:Class ;
-                      rdfs:subClassOf AdvisoryBot:Staff .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Staff
-AdvisoryBot:Staff rdf:type owl:Class .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Tutor
-AdvisoryBot:Tutor rdf:type owl:Class ;
-                  rdfs:subClassOf AdvisoryBot:Staff .
-
-
-#################################################################
-#    Individuals
-#################################################################
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Bradley_Kjell
-AdvisoryBot:Bradley_Kjell rdf:type owl:NamedIndividual ,
-                                   AdvisoryBot:Permanent ;
-                          AdvisoryBot:email "Kjell@ccsu.edu" ;
-                          AdvisoryBot:firstName "Bradley" ;
-                          AdvisoryBot:lastName "Kjell" ;
-                          AdvisoryBot:website "https://cs.ccsu.edu/~kjell/" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Chad_Williams
-AdvisoryBot:Chad_Williams rdf:type owl:NamedIndividual ,
-                                   AdvisoryBot:Permanent ;
-                          AdvisoryBot:email "cwilliams@ccsu.edu" ;
-                          AdvisoryBot:firstName "Chad" ;
-                          AdvisoryBot:lastName "Williams" ;
-                          AdvisoryBot:website "https://sites.google.com/site/chadwilliamshome/" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Edward_Freeman
-AdvisoryBot:Edward_Freeman rdf:type owl:NamedIndividual ,
-                                    AdvisoryBot:Adjunct ;
-                           AdvisoryBot:email "FreemanE@ccsu.edu" ;
-                           AdvisoryBot:firstName "Edward" ;
-                           AdvisoryBot:lastName "Freeman" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Fatemeh_Abdollahzadeh
-AdvisoryBot:Fatemeh_Abdollahzadeh rdf:type owl:NamedIndividual ,
-                                           AdvisoryBot:Permanent ;
-                                  AdvisoryBot:email "Abdollah@ccsu.edu" ;
-                                  AdvisoryBot:firstName "Fatemeh" ;
-                                  AdvisoryBot:lastName "Abdollahzadeh" ;
-                                  AdvisoryBot:website "https://cs.ccsu.edu/~abdollah/" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Geneva_Deutsch
-AdvisoryBot:Geneva_Deutsch rdf:type owl:NamedIndividual ,
-                                    AdvisoryBot:Secretary .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Irena_Pevac
-AdvisoryBot:Irena_Pevac rdf:type owl:NamedIndividual ,
-                                 AdvisoryBot:Permanent ;
-                        AdvisoryBot:email "Pevac@ccsu.edu" ;
-                        AdvisoryBot:firstName "Irena" ;
-                        AdvisoryBot:lastName "Pevac" ;
-                        AdvisoryBot:website "https://cs.ccsu.edu/~pevac/" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Jeffrey_Blankenship
-AdvisoryBot:Jeffrey_Blankenship rdf:type owl:NamedIndividual ,
-                                         AdvisoryBot:Adjunct ;
-                                AdvisoryBot:email "jeffrey.blankenship@ccsu.edu" ;
-                                AdvisoryBot:firstName "Jeffrey" ;
-                                AdvisoryBot:lastName "Blankenship" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Mahdieh_Zabihimayvan
-AdvisoryBot:Mahdieh_Zabihimayvan rdf:type owl:NamedIndividual ,
-                                          AdvisoryBot:Permanent ;
-                                 AdvisoryBot:email "zabihimayvan@ccsu.edu" ;
-                                 AdvisoryBot:firstName "Mahdieh" ;
-                                 AdvisoryBot:lastName "Zabihimayvan" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Muthu_Sankaran
-AdvisoryBot:Muthu_Sankaran rdf:type owl:NamedIndividual ,
-                                    AdvisoryBot:Adjunct ;
-                           AdvisoryBot:email "SankaranM@ccsu.edu" ;
-                           AdvisoryBot:firstName "Muthu" ;
-                           AdvisoryBot:lastName "Sankaran" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Neli_Zlatareva
-AdvisoryBot:Neli_Zlatareva rdf:type owl:NamedIndividual ,
-                                    AdvisoryBot:Permanent ;
-                           AdvisoryBot:email "Zlatareva@ccsu.edu" ;
-                           AdvisoryBot:firstName "Neli" ;
-                           AdvisoryBot:lastName "Zlatareva" ;
-                           AdvisoryBot:website "https://cs.ccsu.edu/~neli/" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Paul_Uccello
-AdvisoryBot:Paul_Uccello rdf:type owl:NamedIndividual ,
-                                  AdvisoryBot:Adjunct ;
-                         AdvisoryBot:email "UCCELLOP@ccsu.edu" ;
-                         AdvisoryBot:firstName "Paul" ;
-                         AdvisoryBot:lastName "Uccello" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Roland_Depratti
-AdvisoryBot:Roland_Depratti rdf:type owl:NamedIndividual ,
-                                     AdvisoryBot:Adjunct ;
-                            AdvisoryBot:email "roland.depratti@ccsu.edu" ;
-                            AdvisoryBot:firstName "Roland" ;
-                            AdvisoryBot:lastName "Depratti" ;
-                            AdvisoryBot:website "http://www.rolanddepratti.com/" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Sixia_Chen
-AdvisoryBot:Sixia_Chen rdf:type owl:NamedIndividual ,
-                                AdvisoryBot:Permanent ;
-                       AdvisoryBot:email "schen@ccsu.edu" ;
-                       AdvisoryBot:firstName "Sixia" ;
-                       AdvisoryBot:lastName "Chen" ;
-                       AdvisoryBot:website "https://cs.ccsu.edu/~chen/" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Stan_Kurkovsky
-AdvisoryBot:Stan_Kurkovsky rdf:type owl:NamedIndividual ,
-                                    AdvisoryBot:Permanent ;
-                           AdvisoryBot:email "kurkovsky@ccsu.edu" ;
-                           AdvisoryBot:firstName "Stan" ;
-                           AdvisoryBot:lastName "Kurovsky" ;
-                           AdvisoryBot:website "https://cs.ccsu.edu/~stan/" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Steven_Ambrosini
-AdvisoryBot:Steven_Ambrosini rdf:type owl:NamedIndividual ,
-                                      AdvisoryBot:Adjunct ;
-                             AdvisoryBot:email "ambrosinis@ccsu.edu" ;
-                             AdvisoryBot:firstName "Steven" ;
-                             AdvisoryBot:lastName "Ambrosini" ;
-                             AdvisoryBot:website "http://sga.professorsplace.info/" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Steven_Mead
-AdvisoryBot:Steven_Mead rdf:type owl:NamedIndividual ,
-                                 AdvisoryBot:Adjunct ;
-                        AdvisoryBot:email "MeadS@ccsu.edu" ;
-                        AdvisoryBot:firstName "Steven" ;
-                        AdvisoryBot:lastName "Mead" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Tom_King
-AdvisoryBot:Tom_King rdf:type owl:NamedIndividual ,
-                              AdvisoryBot:Adjunct ;
-                     AdvisoryBot:email "KingTL@ccsu.edu" ;
-                     AdvisoryBot:firstName "Tom" ;
-                     AdvisoryBot:lastName "King" .
-
-
-###  http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl#Yusuf_Albayram
-AdvisoryBot:Yusuf_Albayram rdf:type owl:NamedIndividual ,
-                                    AdvisoryBot:Permanent ;
-                           AdvisoryBot:email "deutschgem@ccsu.edu" ;
-                           AdvisoryBot:firstName "Yusuf" ;
-                           AdvisoryBot:lastName "Albayram" .
-
-
-#################################################################
-#    General axioms
-#################################################################
-
-[ rdf:type owl:AllDisjointProperties ;
-  owl:members ( AdvisoryBot:email
-                AdvisoryBot:firstName
-                AdvisoryBot:lastName
-                AdvisoryBot:website
-              )
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+AdvisoryBot:Steven_Ambrosini
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Adjunct , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "ambrosinis@ccsu.edu" ;
+        AdvisoryBot:firstName  "Steven" ;
+        AdvisoryBot:lastName   "Ambrosini" ;
+        AdvisoryBot:website    "http://sga.professorsplace.info/" ;
+        owl:differentFrom      AdvisoryBot:Sixia_Chen , AdvisoryBot:Chad_Williams , AdvisoryBot:Stan_Kurkovsky , AdvisoryBot:Yusuf_Albayram , AdvisoryBot:Fatemeh_Abdollahzadeh , AdvisoryBot:Mahdieh_Zabihimayvan , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Neli_Zlatareva , AdvisoryBot:Irena_Pevac , AdvisoryBot:Bradley_Kjell ;
+        owl:sameAs             AdvisoryBot:Steven_Ambrosini ;
+        owl:topDataProperty    "Steven" , "Ambrosini" .
+
+AdvisoryBot:Muthu_Sankaran
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Adjunct , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "SankaranM@ccsu.edu" ;
+        AdvisoryBot:firstName  "Muthu" ;
+        AdvisoryBot:lastName   "Sankaran" ;
+        owl:differentFrom      AdvisoryBot:Sixia_Chen , AdvisoryBot:Chad_Williams , AdvisoryBot:Stan_Kurkovsky , AdvisoryBot:Yusuf_Albayram , AdvisoryBot:Fatemeh_Abdollahzadeh , AdvisoryBot:Mahdieh_Zabihimayvan , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Neli_Zlatareva , AdvisoryBot:Irena_Pevac , AdvisoryBot:Bradley_Kjell ;
+        owl:sameAs             AdvisoryBot:Muthu_Sankaran ;
+        owl:topDataProperty    "Muthu" , "Sankaran" .
+
+AdvisoryBot:Yusuf_Albayram
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Permanent , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "deutschgem@ccsu.edu" ;
+        AdvisoryBot:firstName  "Yusuf" ;
+        AdvisoryBot:lastName   "Albayram" ;
+        owl:differentFrom      AdvisoryBot:Roland_Depratti , AdvisoryBot:Tom_King , AdvisoryBot:Muthu_Sankaran , AdvisoryBot:Steven_Mead , AdvisoryBot:Edward_Freeman , AdvisoryBot:Steven_Ambrosini , AdvisoryBot:Paul_Uccello , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Jeffrey_Blankenship ;
+        owl:sameAs             AdvisoryBot:Yusuf_Albayram ;
+        owl:topDataProperty    "Yusuf" , "Albayram" .
+
+AdvisoryBot:Fatemeh_Abdollahzadeh
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Permanent , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "Abdollah@ccsu.edu" ;
+        AdvisoryBot:firstName  "Fatemeh" ;
+        AdvisoryBot:lastName   "Abdollahzadeh" ;
+        AdvisoryBot:website    "https://cs.ccsu.edu/~abdollah/" ;
+        owl:differentFrom      AdvisoryBot:Roland_Depratti , AdvisoryBot:Tom_King , AdvisoryBot:Muthu_Sankaran , AdvisoryBot:Steven_Mead , AdvisoryBot:Edward_Freeman , AdvisoryBot:Steven_Ambrosini , AdvisoryBot:Paul_Uccello , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Jeffrey_Blankenship ;
+        owl:sameAs             AdvisoryBot:Fatemeh_Abdollahzadeh ;
+        owl:topDataProperty    "Fatemeh" , "Abdollahzadeh" .
+
+AdvisoryBot:CS505  a            owl:Thing , AdvisoryBot:Course , rdfs:Resource ;
+        AdvisoryBot:isTaughtBy  AdvisoryBot:Chad_Williams ;
+        owl:sameAs              AdvisoryBot:CS505 .
+
+AdvisoryBot:Stan_Kurkovsky
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Permanent , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "kurkovsky@ccsu.edu" ;
+        AdvisoryBot:firstName  "Stan" ;
+        AdvisoryBot:lastName   "Kurovsky" ;
+        AdvisoryBot:website    "https://cs.ccsu.edu/~stan/" ;
+        owl:differentFrom      AdvisoryBot:Roland_Depratti , AdvisoryBot:Tom_King , AdvisoryBot:Muthu_Sankaran , AdvisoryBot:Steven_Mead , AdvisoryBot:Edward_Freeman , AdvisoryBot:Steven_Ambrosini , AdvisoryBot:Paul_Uccello , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Jeffrey_Blankenship ;
+        owl:sameAs             AdvisoryBot:Stan_Kurkovsky ;
+        owl:topDataProperty    "Stan" , "Kurovsky" .
+
+AdvisoryBot:Steven_Mead
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Adjunct , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "MeadS@ccsu.edu" ;
+        AdvisoryBot:firstName  "Steven" ;
+        AdvisoryBot:lastName   "Mead" ;
+        owl:differentFrom      AdvisoryBot:Sixia_Chen , AdvisoryBot:Chad_Williams , AdvisoryBot:Stan_Kurkovsky , AdvisoryBot:Yusuf_Albayram , AdvisoryBot:Fatemeh_Abdollahzadeh , AdvisoryBot:Mahdieh_Zabihimayvan , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Neli_Zlatareva , AdvisoryBot:Irena_Pevac , AdvisoryBot:Bradley_Kjell ;
+        owl:sameAs             AdvisoryBot:Steven_Mead ;
+        owl:topDataProperty    "Steven" , "Mead" .
+
+AdvisoryBot:website  a            owl:DatatypeProperty ;
+        rdfs:subPropertyOf        owl:topDataProperty , AdvisoryBot:website ;
+        owl:equivalentProperty    AdvisoryBot:website ;
+        owl:propertyDisjointWith  AdvisoryBot:firstName , AdvisoryBot:email , AdvisoryBot:lastName , owl:bottomDataProperty .
+
+AdvisoryBot:teaches  a            owl:ObjectProperty , rdf:Property , rdfs:Resource ;
+        rdfs:domain               AdvisoryBot:Faculty ;
+        rdfs:range                AdvisoryBot:Course ;
+        rdfs:subPropertyOf        owl:topObjectProperty , AdvisoryBot:teaches ;
+        owl:equivalentProperty    AdvisoryBot:teaches ;
+        owl:inverseOf             AdvisoryBot:isTaughtBy ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+owl:Nothing  a               owl:Class ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Course , AdvisoryBot:Faculty , AdvisoryBot:Permanent , AdvisoryBot:Tutor , AdvisoryBot:Staff , AdvisoryBot:Secretary , AdvisoryBot:Adjunct ;
+        owl:complementOf     owl:Thing ;
+        owl:disjointWith     owl:Thing , AdvisoryBot:Course , AdvisoryBot:Faculty , owl:Nothing , AdvisoryBot:Permanent , AdvisoryBot:Tutor , AdvisoryBot:Staff , AdvisoryBot:Secretary , AdvisoryBot:Adjunct ;
+        owl:equivalentClass  owl:Nothing .
+
+owl:bottomDataProperty
+        a                         owl:DatatypeProperty ;
+        rdfs:subPropertyOf        AdvisoryBot:firstName , AdvisoryBot:email , owl:topDataProperty , AdvisoryBot:website , AdvisoryBot:lastName , owl:bottomDataProperty ;
+        owl:equivalentProperty    owl:bottomDataProperty ;
+        owl:propertyDisjointWith  AdvisoryBot:firstName , owl:topDataProperty , AdvisoryBot:email , AdvisoryBot:website , AdvisoryBot:lastName , owl:bottomDataProperty .
+
+AdvisoryBot:Course  a        owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , rdfs:Resource , AdvisoryBot:Course ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  AdvisoryBot:Course .
+
+AdvisoryBot:Staff  a         owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Staff ;
+        owl:disjointWith     AdvisoryBot:Faculty , owl:Nothing , AdvisoryBot:Permanent , AdvisoryBot:Adjunct ;
+        owl:equivalentClass  AdvisoryBot:Staff .
+
+AdvisoryBot:Adjunct  a       owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Adjunct , rdfs:Resource ;
+        owl:disjointWith     owl:Nothing , AdvisoryBot:Permanent , AdvisoryBot:Tutor , AdvisoryBot:Staff , AdvisoryBot:Secretary ;
+        owl:equivalentClass  AdvisoryBot:Adjunct .
+
+AdvisoryBot:Faculty  a       owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , rdfs:Resource , AdvisoryBot:Faculty ;
+        owl:disjointWith     owl:Nothing , AdvisoryBot:Tutor , AdvisoryBot:Staff , AdvisoryBot:Secretary ;
+        owl:equivalentClass  AdvisoryBot:Faculty .
+
+AdvisoryBot:Edward_Freeman
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Adjunct , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "FreemanE@ccsu.edu" ;
+        AdvisoryBot:firstName  "Edward" ;
+        AdvisoryBot:lastName   "Freeman" ;
+        owl:differentFrom      AdvisoryBot:Sixia_Chen , AdvisoryBot:Chad_Williams , AdvisoryBot:Stan_Kurkovsky , AdvisoryBot:Yusuf_Albayram , AdvisoryBot:Fatemeh_Abdollahzadeh , AdvisoryBot:Mahdieh_Zabihimayvan , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Neli_Zlatareva , AdvisoryBot:Irena_Pevac , AdvisoryBot:Bradley_Kjell ;
+        owl:sameAs             AdvisoryBot:Edward_Freeman ;
+        owl:topDataProperty    "Edward" , "Freeman" .
+
+AdvisoryBot:Sixia_Chen
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Permanent , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "schen@ccsu.edu" ;
+        AdvisoryBot:firstName  "Sixia" ;
+        AdvisoryBot:lastName   "Chen" ;
+        AdvisoryBot:website    "https://cs.ccsu.edu/~chen/" ;
+        owl:differentFrom      AdvisoryBot:Roland_Depratti , AdvisoryBot:Tom_King , AdvisoryBot:Muthu_Sankaran , AdvisoryBot:Steven_Mead , AdvisoryBot:Edward_Freeman , AdvisoryBot:Steven_Ambrosini , AdvisoryBot:Paul_Uccello , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Jeffrey_Blankenship ;
+        owl:sameAs             AdvisoryBot:Sixia_Chen ;
+        owl:topDataProperty    "Sixia" , "Chen" .
+
+AdvisoryBot:Tutor  a         owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Staff , AdvisoryBot:Tutor ;
+        owl:disjointWith     AdvisoryBot:Faculty , owl:Nothing , AdvisoryBot:Permanent , AdvisoryBot:Adjunct ;
+        owl:equivalentClass  AdvisoryBot:Tutor .
+
+AdvisoryBot:Mahdieh_Zabihimayvan
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Permanent , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "zabihimayvan@ccsu.edu" ;
+        AdvisoryBot:firstName  "Mahdieh" ;
+        AdvisoryBot:lastName   "Zabihimayvan" ;
+        owl:differentFrom      AdvisoryBot:Roland_Depratti , AdvisoryBot:Tom_King , AdvisoryBot:Muthu_Sankaran , AdvisoryBot:Steven_Mead , AdvisoryBot:Edward_Freeman , AdvisoryBot:Steven_Ambrosini , AdvisoryBot:Paul_Uccello , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Jeffrey_Blankenship ;
+        owl:sameAs             AdvisoryBot:Mahdieh_Zabihimayvan ;
+        owl:topDataProperty    "Mahdieh" , "Zabihimayvan" .
+
+AdvisoryBot:isTaughtBy
+        a                         owl:ObjectProperty ;
+        rdfs:domain               AdvisoryBot:Course ;
+        rdfs:range                AdvisoryBot:Faculty ;
+        rdfs:subPropertyOf        owl:topObjectProperty , AdvisoryBot:isTaughtBy ;
+        owl:equivalentProperty    AdvisoryBot:isTaughtBy ;
+        owl:inverseOf             AdvisoryBot:teaches ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+owl:Thing  a                 owl:Class ;
+        owl:complementOf     owl:Nothing ;
+        owl:disjointWith     owl:Nothing ;
+        owl:equivalentClass  owl:Thing .
+
+AdvisoryBot:Jeffrey_Blankenship
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Adjunct , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "jeffrey.blankenship@ccsu.edu" ;
+        AdvisoryBot:firstName  "Jeffrey" ;
+        AdvisoryBot:lastName   "Blankenship" ;
+        owl:differentFrom      AdvisoryBot:Sixia_Chen , AdvisoryBot:Chad_Williams , AdvisoryBot:Stan_Kurkovsky , AdvisoryBot:Yusuf_Albayram , AdvisoryBot:Fatemeh_Abdollahzadeh , AdvisoryBot:Mahdieh_Zabihimayvan , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Neli_Zlatareva , AdvisoryBot:Irena_Pevac , AdvisoryBot:Bradley_Kjell ;
+        owl:sameAs             AdvisoryBot:Jeffrey_Blankenship ;
+        owl:topDataProperty    "Jeffrey" , "Blankenship" .
+
+AdvisoryBot:Irena_Pevac
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Permanent , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "Pevac@ccsu.edu" ;
+        AdvisoryBot:firstName  "Irena" ;
+        AdvisoryBot:lastName   "Pevac" ;
+        AdvisoryBot:website    "https://cs.ccsu.edu/~pevac/" ;
+        owl:differentFrom      AdvisoryBot:Roland_Depratti , AdvisoryBot:Tom_King , AdvisoryBot:Muthu_Sankaran , AdvisoryBot:Steven_Mead , AdvisoryBot:Edward_Freeman , AdvisoryBot:Steven_Ambrosini , AdvisoryBot:Paul_Uccello , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Jeffrey_Blankenship ;
+        owl:sameAs             AdvisoryBot:Irena_Pevac ;
+        owl:topDataProperty    "Irena" , "Pevac" .
+
+AdvisoryBot:Paul_Uccello
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Adjunct , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "UCCELLOP@ccsu.edu" ;
+        AdvisoryBot:firstName  "Paul" ;
+        AdvisoryBot:lastName   "Uccello" ;
+        owl:differentFrom      AdvisoryBot:Sixia_Chen , AdvisoryBot:Chad_Williams , AdvisoryBot:Stan_Kurkovsky , AdvisoryBot:Yusuf_Albayram , AdvisoryBot:Fatemeh_Abdollahzadeh , AdvisoryBot:Mahdieh_Zabihimayvan , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Neli_Zlatareva , AdvisoryBot:Irena_Pevac , AdvisoryBot:Bradley_Kjell ;
+        owl:sameAs             AdvisoryBot:Paul_Uccello ;
+        owl:topDataProperty    "Paul" , "Uccello" .
+
+AdvisoryBot:CS492  a            owl:Thing , AdvisoryBot:Course , rdfs:Resource ;
+        AdvisoryBot:isTaughtBy  AdvisoryBot:Chad_Williams ;
+        owl:sameAs              AdvisoryBot:CS492 .
+
+AdvisoryBot:Roland_Depratti
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Adjunct , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "roland.depratti@ccsu.edu" ;
+        AdvisoryBot:firstName  "Roland" ;
+        AdvisoryBot:lastName   "Depratti" ;
+        AdvisoryBot:website    "http://www.rolanddepratti.com/" ;
+        owl:differentFrom      AdvisoryBot:Sixia_Chen , AdvisoryBot:Chad_Williams , AdvisoryBot:Stan_Kurkovsky , AdvisoryBot:Yusuf_Albayram , AdvisoryBot:Fatemeh_Abdollahzadeh , AdvisoryBot:Mahdieh_Zabihimayvan , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Neli_Zlatareva , AdvisoryBot:Irena_Pevac , AdvisoryBot:Bradley_Kjell ;
+        owl:sameAs             AdvisoryBot:Roland_Depratti ;
+        owl:topDataProperty    "Roland" , "Depratti" .
+
+owl:topObjectProperty
+        a                         owl:ObjectProperty , owl:TransitiveProperty , owl:SymmetricProperty , owl:ReflexiveProperty ;
+        rdfs:subPropertyOf        owl:topObjectProperty ;
+        owl:equivalentProperty    owl:topObjectProperty ;
+        owl:inverseOf             owl:topObjectProperty ;
+        owl:propertyDisjointWith  owl:bottomObjectProperty .
+
+AdvisoryBot:email  a              owl:DatatypeProperty ;
+        rdfs:subPropertyOf        owl:topDataProperty , AdvisoryBot:email ;
+        owl:equivalentProperty    AdvisoryBot:email ;
+        owl:propertyDisjointWith  AdvisoryBot:firstName , AdvisoryBot:website , AdvisoryBot:lastName , owl:bottomDataProperty .
+
+owl:topDataProperty  a            owl:DatatypeProperty , rdf:Property , rdfs:Resource ;
+        rdfs:subPropertyOf        owl:topDataProperty ;
+        owl:equivalentProperty    owl:topDataProperty ;
+        owl:propertyDisjointWith  owl:bottomDataProperty .
+
+AdvisoryBot:CS502  a            owl:Thing , AdvisoryBot:Course , rdfs:Resource ;
+        AdvisoryBot:isTaughtBy  AdvisoryBot:Chad_Williams ;
+        owl:sameAs              AdvisoryBot:CS502 .
+
+AdvisoryBot:Chad_Williams
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Permanent , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "cwilliams@ccsu.edu" ;
+        AdvisoryBot:firstName  "Chad" ;
+        AdvisoryBot:lastName   "Williams" ;
+        AdvisoryBot:teaches    AdvisoryBot:CS505 , AdvisoryBot:CS502 , AdvisoryBot:CS492 ;
+        AdvisoryBot:website    "https://sites.google.com/site/chadwilliamshome/" ;
+        owl:differentFrom      AdvisoryBot:Roland_Depratti , AdvisoryBot:Tom_King , AdvisoryBot:Muthu_Sankaran , AdvisoryBot:Steven_Mead , AdvisoryBot:Edward_Freeman , AdvisoryBot:Steven_Ambrosini , AdvisoryBot:Paul_Uccello , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Jeffrey_Blankenship ;
+        owl:sameAs             AdvisoryBot:Chad_Williams ;
+        owl:topDataProperty    "Chad" , "Williams" .
+
+AdvisoryBot:firstName
+        a                         owl:DatatypeProperty , rdf:Property , rdfs:Resource ;
+        rdfs:subPropertyOf        AdvisoryBot:firstName , owl:topDataProperty ;
+        owl:equivalentProperty    AdvisoryBot:firstName ;
+        owl:propertyDisjointWith  AdvisoryBot:email , AdvisoryBot:website , AdvisoryBot:lastName , owl:bottomDataProperty .
+
+owl:bottomObjectProperty
+        a                         owl:ObjectProperty , owl:SymmetricProperty , owl:AsymmetricProperty , owl:IrreflexiveProperty ;
+        rdfs:domain               AdvisoryBot:Faculty , AdvisoryBot:Course ;
+        rdfs:range                AdvisoryBot:Course , AdvisoryBot:Faculty ;
+        rdfs:subPropertyOf        AdvisoryBot:teaches , AdvisoryBot:isTaughtBy , owl:topObjectProperty , owl:bottomObjectProperty ;
+        owl:equivalentProperty    owl:bottomObjectProperty ;
+        owl:inverseOf             owl:bottomObjectProperty ;
+        owl:propertyDisjointWith  AdvisoryBot:teaches , AdvisoryBot:isTaughtBy , owl:topObjectProperty , owl:bottomObjectProperty .
+
+AdvisoryBot:Secretary
+        a                    owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Staff , AdvisoryBot:Secretary ;
+        owl:disjointWith     AdvisoryBot:Faculty , owl:Nothing , AdvisoryBot:Permanent , AdvisoryBot:Adjunct ;
+        owl:equivalentClass  AdvisoryBot:Secretary .
+
+AdvisoryBot:Neli_Zlatareva
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Permanent , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "Zlatareva@ccsu.edu" ;
+        AdvisoryBot:firstName  "Neli" ;
+        AdvisoryBot:lastName   "Zlatareva" ;
+        AdvisoryBot:website    "https://cs.ccsu.edu/~neli/" ;
+        owl:differentFrom      AdvisoryBot:Roland_Depratti , AdvisoryBot:Tom_King , AdvisoryBot:Muthu_Sankaran , AdvisoryBot:Steven_Mead , AdvisoryBot:Edward_Freeman , AdvisoryBot:Steven_Ambrosini , AdvisoryBot:Paul_Uccello , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Jeffrey_Blankenship ;
+        owl:sameAs             AdvisoryBot:Neli_Zlatareva ;
+        owl:topDataProperty    "Neli" , "Zlatareva" .
+
+AdvisoryBot:Bradley_Kjell
+        a                      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Permanent , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "Kjell@ccsu.edu" ;
+        AdvisoryBot:firstName  "Bradley" ;
+        AdvisoryBot:lastName   "Kjell" ;
+        AdvisoryBot:website    "https://cs.ccsu.edu/~kjell/" ;
+        owl:differentFrom      AdvisoryBot:Roland_Depratti , AdvisoryBot:Tom_King , AdvisoryBot:Muthu_Sankaran , AdvisoryBot:Steven_Mead , AdvisoryBot:Edward_Freeman , AdvisoryBot:Steven_Ambrosini , AdvisoryBot:Paul_Uccello , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Jeffrey_Blankenship ;
+        owl:sameAs             AdvisoryBot:Bradley_Kjell ;
+        owl:topDataProperty    "Bradley" , "Kjell" .
+
+AdvisoryBot:Tom_King  a        owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Adjunct , owl:NamedIndividual , rdfs:Resource ;
+        AdvisoryBot:email      "KingTL@ccsu.edu" ;
+        AdvisoryBot:firstName  "Tom" ;
+        AdvisoryBot:lastName   "King" ;
+        owl:differentFrom      AdvisoryBot:Sixia_Chen , AdvisoryBot:Chad_Williams , AdvisoryBot:Stan_Kurkovsky , AdvisoryBot:Yusuf_Albayram , AdvisoryBot:Fatemeh_Abdollahzadeh , AdvisoryBot:Mahdieh_Zabihimayvan , AdvisoryBot:Geneva_Deutsch , AdvisoryBot:Neli_Zlatareva , AdvisoryBot:Irena_Pevac , AdvisoryBot:Bradley_Kjell ;
+        owl:sameAs             AdvisoryBot:Tom_King ;
+        owl:topDataProperty    "Tom" , "King" .
+
+AdvisoryBot:lastName  a           owl:DatatypeProperty , rdf:Property , rdfs:Resource ;
+        rdfs:subPropertyOf        owl:topDataProperty , AdvisoryBot:lastName ;
+        owl:equivalentProperty    AdvisoryBot:lastName ;
+        owl:propertyDisjointWith  AdvisoryBot:firstName , AdvisoryBot:email , AdvisoryBot:website , owl:bottomDataProperty .
+
+AdvisoryBot:Permanent
+        a                    owl:Class , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf      owl:Thing , AdvisoryBot:Faculty , AdvisoryBot:Permanent , rdfs:Resource ;
+        owl:disjointWith     owl:Nothing , AdvisoryBot:Tutor , AdvisoryBot:Staff , AdvisoryBot:Secretary , AdvisoryBot:Adjunct ;
+        owl:equivalentClass  AdvisoryBot:Permanent .
+
+AdvisoryBot:Geneva_Deutsch
+        a                  owl:Thing , AdvisoryBot:Staff , AdvisoryBot:Secretary , owl:NamedIndividual ;
+        owl:differentFrom  AdvisoryBot:Tom_King , AdvisoryBot:Sixia_Chen , AdvisoryBot:Muthu_Sankaran , AdvisoryBot:Stan_Kurkovsky , AdvisoryBot:Yusuf_Albayram , AdvisoryBot:Neli_Zlatareva , AdvisoryBot:Jeffrey_Blankenship , AdvisoryBot:Irena_Pevac , AdvisoryBot:Bradley_Kjell , AdvisoryBot:Roland_Depratti , AdvisoryBot:Steven_Mead , AdvisoryBot:Chad_Williams , AdvisoryBot:Edward_Freeman , AdvisoryBot:Fatemeh_Abdollahzadeh , AdvisoryBot:Steven_Ambrosini , AdvisoryBot:Paul_Uccello , AdvisoryBot:Mahdieh_Zabihimayvan ;
+        owl:sameAs         AdvisoryBot:Geneva_Deutsch .
+
+rdf:rest  a                 rdf:Property , rdfs:Resource ;
+        rdfs:domain         rdf:List ;
+        rdfs:range          rdf:List ;
+        rdfs:subPropertyOf  rdf:rest .
+
+rdf:List  a              rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Resource .
+
+rdf:predicate  a            rdf:Property , rdfs:Resource ;
+        rdfs:domain         rdf:Statement ;
+        rdfs:subPropertyOf  rdf:predicate .
+
+rdf:Property  a          rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Resource , rdf:Property .
+
+rdfs:label  a       owl:AnnotationProperty , rdf:Property , rdfs:Resource ;
+        rdfs:range  rdfs:Literal .
+
+rdf:Statement  a         rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Resource .
+
+rdfs:Class  a            rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Resource , rdfs:Class .
+
+rdf:type  a         rdf:Property , rdfs:Resource ;
+        rdfs:range  rdfs:Class .
+
+rdfs:Resource  a         rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Resource .
+
+rdf:subject  a              rdf:Property , rdfs:Resource ;
+        rdfs:domain         rdf:Statement ;
+        rdfs:subPropertyOf  rdf:subject .
+
+rdf:XMLLiteral  a  rdfs:Datatype , rdfs:Class , rdfs:Resource .
+
+rdfs:comment  a     owl:AnnotationProperty , rdf:Property , rdfs:Resource ;
+        rdfs:range  rdfs:Literal .
+
+rdfs:range  a        rdf:Property , rdfs:Resource ;
+        rdfs:domain  rdf:Property ;
+        rdfs:range   rdfs:Class .
+
+rdfs:subPropertyOf  a  rdf:Property , rdfs:Resource ;
+        rdfs:domain  rdf:Property ;
+        rdfs:range   rdf:Property .
+
+rdf:object  a               rdf:Property , rdfs:Resource ;
+        rdfs:domain         rdf:Statement ;
+        rdfs:subPropertyOf  rdf:object .
+
+rdf:nil  a      rdf:List , rdfs:Resource .
+
+rdfs:domain  a       rdf:Property , rdfs:Resource ;
+        rdfs:domain  rdf:Property ;
+        rdfs:range   rdfs:Class .
+
+rdfs:Literal  a          rdfs:Datatype , rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Resource .
+
+rdf:first  a                rdf:Property , rdfs:Resource ;
+        rdfs:domain         rdf:List ;
+        rdfs:subPropertyOf  rdf:first .
+
+rdfs:subClassOf  a   rdf:Property , rdfs:Resource ;
+        rdfs:domain  rdfs:Class ;
+        rdfs:range   rdfs:Class .
+
+[ a            owl:AllDisjointProperties ;
+  owl:members  [ a          rdf:List , rdfs:Resource ;
+                 rdf:first  AdvisoryBot:email ;
+                 rdf:rest   [ a          rdf:List , rdfs:Resource ;
+                              rdf:first  AdvisoryBot:firstName ;
+                              rdf:rest   [ a          rdf:List , rdfs:Resource ;
+                                           rdf:first  AdvisoryBot:lastName ;
+                                           rdf:rest   [ a          rdf:List , rdfs:Resource ;
+                                                        rdf:first  AdvisoryBot:website ;
+                                                        rdf:rest   ()
+                                                      ]
+                                         ]
+                            ]
+               ]
 ] .
 
+<http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl>
+        a       owl:Ontology .
 
-###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
+rdfs:Container  a        rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Container .
+
+rdfs:ContainerMembershipProperty
+        a                rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:ContainerMembershipProperty , rdf:Property .
+
+rdf:Bag  a               rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdf:Bag , rdfs:Container .
+
+rdf:Seq  a               rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdf:Seq , rdfs:Container .
+
+rdfs:Datatype  a         rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdfs:Datatype , rdfs:Class .
+
+rdf:Alt  a               rdfs:Class , rdfs:Resource ;
+        rdfs:subClassOf  rdf:Alt , rdfs:Container .
+
+rdfs:isDefinedBy  a         owl:AnnotationProperty , rdf:Property , rdfs:Resource ;
+        rdfs:subPropertyOf  rdfs:isDefinedBy , rdfs:seeAlso .
+
+rdfs:seeAlso  a             owl:AnnotationProperty , rdf:Property , rdfs:Resource ;
+        rdfs:subPropertyOf  rdfs:seeAlso .
+
+owl:NamedIndividual  a  rdfs:Class , rdfs:Resource .
+
+owl:DatatypeProperty  a  rdfs:Class , rdfs:Resource .
+
+owl:Class  a    rdfs:Class , rdfs:Resource .
+
+owl:AllDisjointProperties
+        a       rdfs:Class , rdfs:Resource .
+
+owl:Ontology  a  rdfs:Class , rdfs:Resource .
+
+owl:ObjectProperty  a  rdfs:Class , rdfs:Resource .
