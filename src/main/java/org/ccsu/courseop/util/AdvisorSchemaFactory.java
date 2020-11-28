@@ -195,7 +195,8 @@ public Model readIntegratedSchema() throws IOException{
 			  
 			  facultyInference.write(output, "TURTLE");
 			  
-			  output.close(); courseInference.write(output1, "TURTLE");
+			  output.close();
+			  courseInference.write(output1, "TURTLE");
 			  
 			  output1.close();
 			 

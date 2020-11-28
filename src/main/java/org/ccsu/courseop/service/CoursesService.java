@@ -188,9 +188,10 @@ public class CoursesService {
 				+ "base <http://www.cs.ccsu.edu/~neli/AdvisoryBot.owl> " +
 
 				"JSON {  \"Faculty\" : ?faculty , "
-				+ " \"courseNumber\" : ?course_number , } "
+				+ " \"courseNumber\" : ?course_number  } "
 				+ "where {"
 				+ " ?Faculty :teaches ?course_number . }";
+		System.out.println("Print query \n " +selectQuery1 );
 
 		Model schema = schemaFactory.readCourseSchema();
 		query = QueryFactory.create(selectQuery1, Syntax.syntaxARQ);
